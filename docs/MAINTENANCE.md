@@ -45,6 +45,36 @@ Mevsimsel yoğunluk: **Google I/O (Mayıs)** ve **WWDC (Haziran)** haftalarında
 hacmi yüksek olur — o haftalarda tur daha uzun sürer, normaldir. **Ağustos** civarı Play
 targetSdk eşiği yaklaşır — `android-platform-upgrade` takvim bölümünü mutlaka kontrol et.
 
+## 1b. Resmî Referans Repoları ve Ajan Kuralları
+
+Duyuruların yanında, platform sahiplerinin **resmî örnek/referans repoları** da her hafta
+taranır — bir desen değişikliği çoğu zaman blog'dan önce referans koda düşer:
+
+| Repo / Kaynak | Ne aranır | Etkilenen |
+|---|---|---|
+| `github.com/anthropics/skills` | Anthropic'in resmî skill koleksiyonu: yeni skill yazım desenleri, frontmatter konvansiyonları, yeni yayınlanan mobil/ilgili skill'ler | `docs/AUTHORING.md`, skill yapısı geneli |
+| `github.com/android/nowinandroid` | Google'ın referans Android mimarisi: modül yapısı, convention plugin, navigasyon, veri katmanı desen değişimleri | `android-architect`, `feature-scaffold`, `android-gradle-build`, `android-data-layer`, `android-navigation` |
+| `github.com/android/compose-samples` | Güncel Compose desenleri, yeni API kullanım örnekleri | `android-compose-ui`, `android-adaptive-formfactors` |
+| `github.com/android/architecture-samples` | Mimari desen güncellemeleri | `android-architect` |
+| developer.android.com AI/ajan rehberleri (Gemini in Android Studio kuralları, resmî LLM yönergeleri) | Google'ın AI destekli geliştirme için yayınladığı resmî kurallar | tüm Android skill'leri, `on-device-ai` |
+| kotlinlang.org coding conventions + `Kotlin/KEEP` | Dil konvansiyonu ve yaklaşan dil değişiklikleri | `kdoc-standards`, `android-architect`, `kmp-shared` |
+| Apple sample code (developer.apple.com/sample-code) + Swift API Design Guidelines | Apple'ın güncel SwiftUI/Concurrency örnek desenleri | `ios-swift-architect` |
+
+Bu taramada kural farklıdır — sürüm değil **desen** aranır:
+
+1. Referans repo bizim skill'in öğrettiğinden farklı bir deseni benimsemişse
+   (örn. nowinandroid navigasyon yaklaşımını değiştirdiyse), bu bir
+   **davranış değişikliği** olarak işlenir: skill güncellenir, kaynak olarak
+   ilgili commit/PR linki verilir.
+2. Resmî bir skill koleksiyonunda (anthropics/skills vb.) bizim alanımızla örtüşen
+   yeni/güncellenmiş bir skill yayınlanmışsa: **kopyalama, harmanla** — iyi fikri
+   kendi üslubumuz ve yapımızla (karar rehberi + kod + checklist, TR/EN) skill'imize işle,
+   kaynağı PR'da belirt. Bizim skill'de olup onlarda olmayan içerik silinmez.
+3. Fark "tercih" seviyesindeyse (iki yaklaşım da geçerli) skill'e tradeoff notu
+   eklenebilir; zorunlu değilse dokunma ve raporda belirt.
+4. Referans repolarda **hareket yoksa** bunu doğrulamak yeterli — her hafta desen
+   farkı çıkmaz; çıkmıyorsa bu, taramanın gereksizliği değil sağlığın kanıtıdır.
+
 ## 2. Karşılaştırma
 
 Her bulgu için:
