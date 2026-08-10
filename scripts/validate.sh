@@ -80,5 +80,40 @@ for skill_path in "$SRC_DIR"/*/; do
 done
 
 echo
+echo "Katalog senkronizasyonu"
+
+# Skill listesinin indekslerde eksiksiz olduğunu doğrula.
+# Bir skill eklenip kataloglara yazılmazsa kimse onu bulamaz.
+declare -a CATALOGS=(
+  "$REPO_ROOT/README.md"
+  "$REPO_ROOT/skills/README.md"
+  "$REPO_ROOT/templates/CLAUDE.md"
+)
+
+for catalog in "${CATALOGS[@]}"; do
+  rel="${catalog#"$REPO_ROOT"/}"
+  if [[ ! -f "$catalog" ]]; then
+    fail "katalog dosyası yok: $rel"
+    continue
+  fi
+  missing=""
+  for skill_path in "$SRC_DIR"/*/; do
+    sname="$(basename "$skill_path")"
+    grep -q "\`$sname\`\|($sname)" "$catalog" || missing+=" $sname"
+  done
+  if [[ -n "$missing" ]]; then
+    fail "$rel içinde listelenmeyen skill'ler:$missing"
+  else
+    echo "  tamam  $rel"
+  fi
+done
+
+# Ters yön: katalogda anılan ama var olmayan skill (yeniden adlandırma artığı)
+while IFS= read -r referenced; do
+  [[ -d "$SRC_DIR/$referenced" ]] || fail "skills/README.md var olmayan skill'e referans veriyor: $referenced"
+done < <(grep -o '^| \[`[a-z0-9-]*`\](' "$REPO_ROOT/skills/README.md" 2>/dev/null \
+         | sed 's/^| \[`//; s/`\](.*//' | sort -u)
+
+echo
 echo "Kontrol edilen: $checked skill   Hata: $errors   Uyarı: $warnings"
 [[ "$errors" -eq 0 ]] || exit 1

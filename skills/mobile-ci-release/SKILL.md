@@ -1,14 +1,16 @@
 ---
 name: mobile-ci-release
 description: >
-  Mobil CI/CD ve yayın süreci uzmanlığı: GitHub Actions workflow'ları, Gradle/Xcode build
-  pipeline'ları, imzalama (keystore, fastlane match), Play Console ve App Store Connect
-  otomasyonu, staged rollout, versiyonlama, changelog, crash izleme ve release sonrası takip.
+  Mobil CI/CD ve yayın süreci uzmanlığı: GitHub Actions ve Jenkins pipeline'ları,
+  Gradle/Xcode build akışları, statik analiz kapıları (detekt/ktlint/SonarQube),
+  imzalama (keystore, fastlane match), Play Console ve App Store Connect otomasyonu,
+  staged rollout, versiyonlama, changelog, crash izleme ve release sonrası takip.
 
-  Şu isteklerde tetiklen: "CI kur", "GitHub Actions", "pipeline", "otomatik build",
-  "fastlane", "Play Store'a yükle", "TestFlight", "internal testing", "imzalama",
-  "keystore CI", "staged rollout", "release süreci", "versiyon numarası", "changelog",
-  "PR'da test çalıştır", "lint CI".
+  Şu isteklerde tetiklen: "CI kur", "GitHub Actions", "Jenkins", "Jenkinsfile", "pipeline",
+  "otomatik build", "fastlane", "Play Store'a yükle", "TestFlight", "internal testing",
+  "imzalama", "keystore CI", "staged rollout", "release süreci", "versiyon numarası",
+  "changelog", "PR'da test çalıştır", "lint CI", "detekt CI", "SonarQube", "quality gate",
+  "Firebase App Distribution".
 ---
 
 # Mobile CI/CD & Release Skill
@@ -72,6 +74,136 @@ jobs:
 
 `--continue` sayesinde ilk hatada durmaz; tüm sorunları tek turda görürsün.
 `concurrency` ile aynı PR'a yeni push gelince eski koşu iptal olur, runner israfı önlenir.
+
+---
+
+## 1b. Jenkins Pipeline (kurumsal ortam)
+
+Birçok kurumsal Android projesi GitHub Actions değil **Jenkins** kullanır (self-hosted
+runner, iç ağdaki artifact deposu, kurumsal SSO). Declarative pipeline standardı:
+
+```groovy
+pipeline {
+    agent { label 'android' }
+
+    options {
+        timeout(time: 45, unit: 'MINUTES')
+        disableConcurrentBuilds(abortPrevious: true)
+        buildDiscarder(logRotator(numToKeepStr: '30'))
+        timestamps()
+    }
+
+    environment {
+        JAVA_HOME    = tool name: 'jdk-17', type: 'jdk'
+        GRADLE_OPTS  = '-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false'
+        ANDROID_HOME = '/opt/android-sdk'
+    }
+
+    parameters {
+        choice(name: 'FLAVOR', choices: ['Efes', 'Live'], description: 'Staging / prod')
+        booleanParam(name: 'DISTRIBUTE', defaultValue: false, description: 'Testere dağıt')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps { checkout scm }
+        }
+
+        stage('Static analysis') {
+            parallel {
+                stage('detekt') {
+                    // Takım konfigürasyonu ve baseline `detektAll` görevinde tanımlı;
+                    // çıplak `detekt` bunları almaz ve yanlış yeşil verir.
+                    steps { sh './gradlew detektAll' }
+                }
+                stage('lint') {
+                    steps { sh "./gradlew lint${params.FLAVOR}Debug" }
+                }
+            }
+        }
+
+        stage('Unit tests') {
+            steps { sh "./gradlew test${params.FLAVOR}DebugUnitTest" }
+            post {
+                always {
+                    junit '**/build/test-results/test*/TEST-*.xml'
+                    recordCoverage tools: [[parser: 'JACOCO']]
+                }
+            }
+        }
+
+        stage('Build') {
+            steps { sh "./gradlew :app:assemble${params.FLAVOR}Debug" }
+        }
+
+        stage('SonarQube') {
+            when { branch pattern: 'develop|main', comparator: 'REGEXP' }
+            steps {
+                withSonarQubeEnv('sonar-kurumsal') { sh './gradlew sonar' }
+            }
+        }
+
+        stage('Quality gate') {
+            when { branch pattern: 'develop|main', comparator: 'REGEXP' }
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('Distribute') {
+            when { expression { params.DISTRIBUTE } }
+            steps {
+                withCredentials([file(credentialsId: 'firebase-sa', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    sh "./gradlew appDistributionUpload${params.FLAVOR}Debug"
+                }
+            }
+        }
+    }
+
+    post {
+        always  { archiveArtifacts artifacts: '**/build/outputs/**/*.apk', allowEmptyArchive: true }
+        failure { emailext to: '$DEFAULT_RECIPIENTS', subject: "FAIL: ${env.JOB_NAME} #${env.BUILD_NUMBER}", body: '${BUILD_URL}' }
+        cleanup { sh './gradlew --stop' }
+    }
+}
+```
+
+Jenkins'e özgü tuzaklar:
+
+| Tuzak | Çözüm |
+|---|---|
+| Gradle daemon paylaşılan runner'da bellek şişiriyor | `-Dorg.gradle.daemon=false`, `post { cleanup { sh './gradlew --stop' } }` |
+| Workspace kirli kalıyor (önceki build'in çıktısı) | `cleanWs()` veya `checkout scm` öncesi `deleteDir()` |
+| Aynı branch'e ardışık push'lar sırayla kuyruğa giriyor | `disableConcurrentBuilds(abortPrevious: true)` |
+| Sırlar shell log'una sızıyor | `withCredentials` kullan; `sh "echo $TOKEN"` yazma, `set +x` |
+| Emülatör testleri kararsız | Ayrı gecelik job, PR pipeline'ında değil |
+| `detekt` yeşil ama takım kuralları uygulanmamış | Projenin kendi toplu görevini çağır (`detektAll` gibi) |
+
+**Flavor'lı projelerde** görev adlarının flavor içerdiğini unutma:
+`testEfesDebugUnitTest`, `assembleLiveRelease`. Jenkins parametresini görev adına
+enterpolasyonla geçirmek en sade yol.
+
+---
+
+## 1c. Statik Analiz Kapıları
+
+Hangi CI olursa olsun, PR pipeline'ında şu üç kapı bulunur:
+
+```bash
+./gradlew detektAll          # veya projenin toplu detekt görevi
+./gradlew lintDebug          # Android Lint
+./gradlew sonar              # SonarQube (develop/main)
+```
+
+Kurallar:
+- **Baseline dosyalarını commit'le** (`detekt-baseline.xml`) — mevcut ihlaller build'i
+  kırmasın ama yenileri kırsın. Baseline büyüyorsa kural zayıflıyor demektir; küçültmeyi planla.
+- SonarQube quality gate `abortPipeline: true` ile bağlansın; yoksa "gate kırmızı ama merge edildi" olur
+- Yeni kod için ayrı eşik kullan (Sonar "new code" metrikleri) — eski borç yeni PR'ı bloklamasın
+- Lint uyarılarını `warningsAsErrors` ile hataya çevirmeden önce mevcut uyarıları temizle,
+  yoksa ekip `@Suppress` serpmeye başlar
 
 ---
 
@@ -235,6 +367,9 @@ Rollout durdurma refleksin hızlı olsun: %10'da yakalanan bir bug, %100'de yaka
 ## Checklist
 
 - [ ] PR pipeline < 10 dk ve her PR'da zorunlu
+- [ ] Statik analiz kapıları bağlı (detekt/lint/Sonar) ve gate pipeline'ı kırıyor
+- [ ] Baseline dosyaları commit'li ve büyümüyor
+- [ ] Jenkins ise: daemon kapalı, workspace temizleniyor, eşzamanlı build engelli
 - [ ] Gradle/SPM cache aktif
 - [ ] Keystore ve sertifikalar repoda değil, secret'ta
 - [ ] Release build tamamen otomatik, elle adım yok

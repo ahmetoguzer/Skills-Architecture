@@ -84,7 +84,20 @@ Kötü: `- [ ] Kod kaliteli`
 
 Her madde **tek bir şeyi**, **bakarak doğrulanabilir** şekilde sorar.
 
-## 7. Doğrulama
+## 7. Kataloglara Ekle
+
+Bir skill üç yerde listelenir. Üçünü de güncelle, yoksa skill pratikte görünmez olur:
+
+| Dosya | Ne yazılır |
+|---|---|
+| `README.md` | Doğru grup tablosunda satır: link + kapsam özeti |
+| `skills/README.md` | İndeks satırı + gerekiyorsa yönlendirme haritasına ekleme |
+| `templates/CLAUDE.md` | Skill tablosunda "ne zaman" satırı |
+
+Yeni skill bir başkasının alanına yakınsa **sınır kuralları** tablolarına da bir satır ekle
+(`skills/README.md` ve `docs/ARCHITECTURE.md`) — karışma ihtimalini baştan çöz.
+
+## 8. Doğrulama
 
 ```bash
 ./scripts/validate.sh
@@ -92,14 +105,18 @@ Her madde **tek bir şeyi**, **bakarak doğrulanabilir** şekilde sorar.
 
 Kontrol ettikleri:
 - Her skill klasöründe `SKILL.md` var
+- Klasör adı kebab-case
 - Frontmatter geçerli, `name` ve `description` dolu
 - `name` klasör adıyla eşleşiyor
 - SKILL.md içindeki `references/...` yolları gerçekten var
+- Üç katalog (README, skills/README, templates/CLAUDE.md) skill listesiyle senkron
+- Katalogda anılan ama var olmayan skill yok (yeniden adlandırma artığı)
 - Satır sayısı 500'ü aşmıyor (uyarı)
+- Checklist bölümü var (uyarı)
 
 CI'da `.github/workflows/validate.yml` ile her PR'da otomatik çalışır.
 
-## 8. Test Etme
+## 9. Test Etme
 
 Yeni skill'i yazdıktan sonra tetiklemeyi elle dene: 5 farklı ifadeyle iste ve
 doğru skill'in seçildiğini gör. Seçilmiyorsa `description`'daki tetikleyicileri güncelle —

@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate skill structure
+      - name: Validate skill structure and catalog sync
         run: ./scripts/validate.sh
 
       - name: Shellcheck
@@ -19,5 +19,19 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
           shellcheck scripts/*.sh
 
-      - name: Dry-run install
-        run: ./scripts/install.sh --target "${RUNNER_TEMP}/skills"
+      - name: Dry-run install (user scope)
+        run: ./scripts/install.sh --target "${RUNNER_TEMP}/skills-user"
+
+      - name: Dry-run install (project scope)
+        run: |
+          mkdir -p "${RUNNER_TEMP}/demo-project"
+          ./scripts/install.sh --project "${RUNNER_TEMP}/demo-project"
+          test -f "${RUNNER_TEMP}/demo-project/.claude/skills/delivery-pipeline/SKILL.md"
+
+      - name: Install is idempotent
+        run: |
+          ./scripts/install.sh --target "${RUNNER_TEMP}/skills-user" | tee /tmp/second-run.txt
+          ! grep -q "yedek" /tmp/second-run.txt
+
+      - name: Check relative links in docs
+        run: ./scripts/check-links.sh
