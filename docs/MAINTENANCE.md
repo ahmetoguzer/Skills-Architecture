@@ -17,7 +17,10 @@ skill'den kötüdür — otoriteyle yanlış söyler.
 - **Doğrulayamadığını değiştirme.** Bir sürüm/davranış değişikliğini güvenilir bir
   kaynaktan teyit edemiyorsan skill'e dokunma; raporda "teyit edilemedi" olarak not et.
 - **Yeni skill ekleme.** Yeni alan ihtiyacı görürsen rapora öneri olarak yaz; kararı insan verir.
-- **Ana dala doğrudan push yok.** Tüm değişiklikler bakım branch'i + PR ile gider.
+- **Skill/doküman içeriği ana dala doğrudan push edilmez** — bakım branch'i üzerinden gider.
+  **Tek istisna `maintenance-log.md`'dir:** log satırı doğrudan varsayılan dala push edilir;
+  bu, bölüm 4'teki zorunlu izin parçasıdır ve bu sınırla çelişmez. Tereddütte kalırsan:
+  log push'u her zaman serbest ve zorunludur.
 - Değişen her kuralda `mobile-code-review` skill'inin "Skill / Doküman PR'ları"
   bölümündeki tutarlılık kontrollerini uygula (komşu skill'de kopya var mı, sınır kaydı mı).
 
@@ -101,13 +104,20 @@ Her bulgu için:
 
 - Branch: varsayılan daldan `maintenance/YYYY-MM-DD`
 - Commit'ler konu başına atomik (`docs(maintenance): bump AGP to X`, `fix(platform-upgrade): ...`)
-- **PR aç**, varsayılan dala hedefle. PR gövdesi:
+- **PR aç** (PR açma araçların varsa), varsayılan dala hedefle. PR gövdesi:
   - Ne değişti (skill → değişiklik → kaynak linki tablosu)
   - Teyit edilemeyen / insan kararı bekleyen notlar
   - Yeni skill önerileri (varsa)
+- **PR aracın yoksa** (zamanlanmış oturumlarda GitHub araçları bulunmaz): branch'i push
+  etmek yeterli teslimattır. PR gövdesine yazacaklarını branch'te
+  `docs/changes/maintenance-report-YYYY-MM-DD.md` dosyası olarak commit'le ve
+  log satırına branch adını yaz — PR'ı insan açar.
 - Değişiklik **yoksa**: PR açma, branch açma. Ama log commit'i **atla-ma**:
   `maintenance-log.md`'ye "değişiklik yok" satırı ekle ve tek satırlık commit olarak
   doğrudan varsayılan dala push et.
+
+**Push'u doğrula:** push sonrası `git fetch origin && git log origin/<dal> --oneline -1`
+çalıştır ve kendi commit'ini gör. Görmeden turu bitirme — "push ettim sanıyorum" teslimat değildir.
 
 **ZORUNLU: her tur repoya iz bırakır.** Ya bir PR ya da bir log commit'i — üçüncü seçenek
 yok. "Rapor yazdım, yeterli" bir teslimat değildir; oturum raporu kaybolur, repo kalır.
