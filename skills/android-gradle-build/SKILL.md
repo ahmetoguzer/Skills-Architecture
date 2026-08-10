@@ -1,0 +1,234 @@
+---
+name: android-gradle-build
+description: >
+  Gradle build sistemi uzmanlığı: version catalog (libs.versions.toml), convention plugin'ler
+  (buildSrc / build-logic), multi-module Gradle setup, build variant ve flavor yönetimi,
+  build süresi optimizasyonu, KSP/KAPT geçişi, dependency çakışması çözümü.
+
+  Şu isteklerde tetiklen: "gradle", "build.gradle.kts", "version catalog", "libs.versions.toml",
+  "convention plugin", "buildSrc", "build-logic", "flavor", "build type", "build yavaş",
+  "modül ekle", "bağımlılık çakışması", "duplicate class", "KSP'ye geç", "signing config",
+  "BuildConfig", "gradle.properties".
+---
+
+# Android Gradle Build Skill
+
+Sen build engineer'sın. Gradle kodu da production kodudur: kopyala-yapıştır yerine
+**convention plugin**, sabit sürüm string'i yerine **version catalog** kullanılır.
+
+## Altın Kural
+
+10 modüllü bir projede aynı `android { }` bloğunu 10 kez yazıyorsan, bu bir bug'dır.
+Ortaklaştır.
+
+---
+
+## 1. Version Catalog — `gradle/libs.versions.toml`
+
+```toml
+[versions]
+agp = "8.7.3"
+kotlin = "2.1.0"
+ksp = "2.1.0-1.0.29"
+composeBom = "2024.12.01"
+hilt = "2.53.1"
+coroutines = "1.9.0"
+retrofit = "2.11.0"
+
+[libraries]
+androidx-core-ktx        = { module = "androidx.core:core-ktx", version = "1.15.0" }
+androidx-lifecycle-vm    = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.8.7" }
+compose-bom              = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-ui               = { module = "androidx.compose.ui:ui" }
+compose-material3        = { module = "androidx.compose.material3:material3" }
+hilt-android             = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler            = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+coroutines-core          = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+retrofit                 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+turbine                  = { module = "app.cash.turbine:turbine", version = "1.2.0" }
+mockk                    = { module = "io.mockk:mockk", version = "1.13.13" }
+
+[bundles]
+compose = ["compose-ui", "compose-material3"]
+test-unit = ["turbine", "mockk"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library     = { id = "com.android.library", version.ref = "agp" }
+kotlin-android      = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose      = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp                 = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt                = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+```
+
+Kullanım: `implementation(libs.androidx.core.ktx)`, `implementation(libs.bundles.compose)`.
+Toml'daki `-` Kotlin'de `.` olur.
+
+---
+
+## 2. Convention Plugin'ler — `build-logic/`
+
+`buildSrc` yerine **`build-logic` included build** tercih et: `buildSrc`'de bir değişiklik
+tüm projeyi invalidate eder, included build etmez.
+
+```
+build-logic/
+├── settings.gradle.kts
+└── convention/
+    ├── build.gradle.kts
+    └── src/main/kotlin/
+        ├── AndroidLibraryConventionPlugin.kt
+        ├── AndroidFeatureConventionPlugin.kt
+        ├── AndroidComposeConventionPlugin.kt
+        └── AndroidHiltConventionPlugin.kt
+```
+
+`settings.gradle.kts` (kök):
+```kotlin
+pluginManagement {
+    includeBuild("build-logic")
+    repositories { google(); mavenCentral(); gradlePluginPortal() }
+}
+```
+
+`AndroidLibraryConventionPlugin.kt`:
+```kotlin
+class AndroidLibraryConventionPlugin : Plugin<Project> {
+    override fun apply(target: Project) = with(target) {
+        pluginManager.apply("com.android.library")
+        pluginManager.apply("org.jetbrains.kotlin.android")
+
+        extensions.configure<LibraryExtension> {
+            compileSdk = 35
+            defaultConfig {
+                minSdk = 24
+                testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+            }
+            compileOptions {
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
+            }
+        }
+        extensions.configure<KotlinAndroidProjectExtension> {
+            compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+}
+```
+
+`convention/build.gradle.kts` içinde kaydet:
+```kotlin
+gradlePlugin {
+    plugins {
+        register("androidLibrary") {
+            id = "myapp.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidFeature") {
+            id = "myapp.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
+    }
+}
+```
+
+Artık her feature modülünün `build.gradle.kts`'i 6 satır:
+```kotlin
+plugins {
+    id("myapp.android.feature")
+    id("myapp.android.compose")
+    id("myapp.android.hilt")
+}
+android { namespace = "com.example.feature.product" }
+dependencies { implementation(projects.domain) }
+```
+
+---
+
+## 3. Type-safe Project Accessors
+
+`settings.gradle.kts`:
+```kotlin
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include(":app")
+include(":domain", ":data")
+include(":core:ui", ":core:network", ":core:database", ":core:common", ":core:testing")
+include(":feature:home", ":feature:product", ":feature:checkout")
+```
+
+`project(":core:network")` yerine `projects.core.network` — yazım hatası compile-time'da yakalanır.
+
+---
+
+## 4. Build Variant ve Flavor
+
+```kotlin
+android {
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            buildConfigField("String", "BASE_URL", "\"https://api-dev.example.com/\"")
+        }
+        create("prod") {
+            dimension = "environment"
+            buildConfigField("String", "BASE_URL", "\"https://api.example.com/\"")
+        }
+    }
+    buildFeatures { buildConfig = true }
+}
+```
+
+Flavor sayısını düşük tut: her flavor × buildType kombinasyonu ayrı bir variant demek,
+build ve test matrisi katlanarak büyür.
+
+---
+
+## 5. Build Süresi Optimizasyonu
+
+`gradle.properties`:
+```properties
+org.gradle.jvmargs=-Xmx4g -XX:+UseParallelGC -Dfile.encoding=UTF-8
+org.gradle.parallel=true
+org.gradle.caching=true
+org.gradle.configuration-cache=true
+android.useAndroidX=true
+android.nonTransitiveRClass=true
+android.enableR8.fullMode=true
+kotlin.incremental=true
+```
+
+- **KAPT → KSP geçişi**: en büyük tek kazanç. Hilt, Room, Moshi hepsi KSP destekliyor.
+  KAPT Java stub üretir; KSP üretmez, tipik olarak 2x hızlıdır.
+- **`api` yerine `implementation`**: `api` bağımlılığı transitif olarak yayar,
+  değişiklikte tüketici modüller de yeniden derlenir.
+- Ölçüm: `./gradlew assembleDebug --scan` veya
+  `./gradlew --profile` → `build/reports/profile/` altındaki HTML raporu.
+
+---
+
+## 6. Sık Karşılaşılan Hatalar
+
+| Hata | Sebep | Çözüm |
+|---|---|---|
+| `Duplicate class ... found in modules` | Aynı kütüphanenin iki sürümü | `./gradlew :app:dependencies` ile ağacı çıkar, `resolutionStrategy.force` veya exclude |
+| `Unsupported class file major version` | JDK/AGP uyumsuzluğu | JDK 17 kullan, `compileOptions` hizala |
+| `Configuration cache problems` | Task'ta build-time'da Project referansı | `providers.gradleProperty()` ile lazy oku |
+| `Manifest merger failed` | minSdk/izin çakışması | `tools:replace` veya `tools:overrideLibrary` |
+| Kotlin/KSP sürüm uyuşmazlığı | KSP sürümü Kotlin'e bağlı | KSP versiyonunun ilk parçası Kotlin sürümüyle aynı olmalı |
+
+---
+
+## Checklist
+
+- [ ] Tüm bağımlılıklar version catalog'da, hiçbir modülde string sürüm yok
+- [ ] Ortak `android { }` konfigürasyonu convention plugin'de
+- [ ] `build-logic` included build kullanılıyor (`buildSrc` değil)
+- [ ] Type-safe project accessors açık
+- [ ] Configuration cache + build cache açık ve çalışıyor
+- [ ] KAPT kullanılmıyor (hepsi KSP)
+- [ ] `api` sadece gerçekten gerekli yerlerde
+- [ ] Release signing config `local.properties`/env'den okunuyor, repoda keystore yok
