@@ -1,5 +1,6 @@
 ---
 name: android-native-ndk
+last_reviewed: 2026-08
 description: >
   Android NDK ve native (C/C++) katman uzmanlığı: JNI köprüsü, CMake yapılandırması,
   Kotlin/Java ↔ C++ veri geçişi, bellek yönetimi ve leak önleme, native thread'den JNI çağrısı,

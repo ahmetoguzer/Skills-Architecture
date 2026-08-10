@@ -54,6 +54,19 @@ for skill_path in "$SRC_DIR"/*/; do
     fail "name ('$fm_name') klasör adıyla ('$name') eşleşmiyor"
   fi
 
+  # Tazelik damgası: eksikse veya 6 aydan eskiyse uyarı (bakım ajanı günceller)
+  fm_reviewed="$(printf '%s\n' "$frontmatter" | awk -F': *' '/^last_reviewed:/ { print $2; exit }')"
+  if [[ -z "$fm_reviewed" ]]; then
+    warn "last_reviewed damgası yok"
+  elif [[ "$fm_reviewed" =~ ^([0-9]{4})-([0-9]{2})$ ]]; then
+    stamp_months=$(( ${BASH_REMATCH[1]} * 12 + 10#${BASH_REMATCH[2]} ))
+    now_months=$(( $(date +%Y) * 12 + 10#$(date +%m) ))
+    age=$(( now_months - stamp_months ))
+    [[ "$age" -gt 6 ]] && warn "last_reviewed $fm_reviewed — $age aydır elden geçmemiş"
+  else
+    warn "last_reviewed formatı YYYY-MM olmalı: '$fm_reviewed'"
+  fi
+
   if ! printf '%s\n' "$frontmatter" | grep -q '^description:'; then
     fail "frontmatter'da 'description' yok"
   else

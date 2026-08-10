@@ -1,5 +1,6 @@
 ---
 name: design-doc
+last_reviewed: 2026-08
 description: >
   Kodlamadan önce yazılan tasarım dokümanı: büyük bir feature veya refactor için problem
   tanımı, hedefler/hedef olmayanlar, önerilen tasarım, veri modeli ve API sözleşmesi,

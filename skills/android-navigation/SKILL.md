@@ -1,5 +1,6 @@
 ---
 name: android-navigation
+last_reviewed: 2026-08
 description: >
   Compose navigasyon mimarisi: type-safe route'lar (@Serializable), nav graph tasarımı,
   nested graph ve modüller arası navigasyon, deep link / App Links, argüman ve sonuç geçişi,

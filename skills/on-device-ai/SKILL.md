@@ -1,5 +1,6 @@
 ---
 name: on-device-ai
+last_reviewed: 2026-08
 description: >
   Cihaz üstü ve hibrit yapay zekâ: ML Kit hazır API'leri, Gemini Nano / ML Kit GenAI ile
   cihazda üretken görevler, bulut LLM'e ne zaman gidileceği, TensorFlow Lite (LiteRT) ve

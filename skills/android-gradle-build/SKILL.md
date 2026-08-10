@@ -1,5 +1,6 @@
 ---
 name: android-gradle-build
+last_reviewed: 2026-08
 description: >
   Gradle build sistemi uzmanlığı: version catalog (libs.versions.toml), convention plugin'ler
   (buildSrc / build-logic), multi-module Gradle setup, build variant ve flavor yönetimi,

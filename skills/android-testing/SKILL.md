@@ -1,5 +1,6 @@
 ---
 name: android-testing
+last_reviewed: 2026-08
 description: >
   Android test stratejisi ve test kodu yazma: ViewModel/UseCase/Repository unit testleri,
   Flow testi (Turbine), coroutine testi (runTest, TestDispatcher), Compose UI testi,

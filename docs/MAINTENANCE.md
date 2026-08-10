@@ -78,6 +78,34 @@ Her bulgu için:
 - Değişiklik **yoksa**: PR açma, branch açma. Sadece log'a "değişiklik yok" satırı işle
   (bunun için tek satırlık commit doğrudan varsayılan dala atılabilir — tek istisna budur).
 
+## 4b. Tazelik damgası
+
+Bu turda içeriğine dokunduğun **veya** okuyup güncel olduğunu teyit ettiğin her skill'in
+frontmatter'ındaki `last_reviewed` alanını içinde bulunulan aya güncelle (`YYYY-MM`).
+`validate.sh` 6 aydan eski damgalar için uyarı verir — hedef, hiçbir skill'in
+uyarıya düşmemesi. Uyarıdaki skill'ler bir sonraki turun öncelikli inceleme listesidir.
+
+---
+
+## 4c. Periyodik ek görevler
+
+Tur numarası = `docs/maintenance-log.md`'deki veri satırı sayısı + 1.
+
+**Her 4. tur — yönlendirme evali** (`evals/README.md` prosedürü):
+`evals/routing.yaml`'daki tüm vakaları, yalnızca skill description'larını okuyarak koş.
+Sonucu rapora yaz (geçen/toplam + başarısız vakalar tablosu). Başarısızlık varsa
+düzeltme **description seviyesindedir** (tetikleyici ekle / daralt); düzeltmeyi
+bakım PR'ına dahil et ve evali yeniden koşup sonucu doğrula.
+
+**Her 12. tur — derin tutarlılık denetimi:**
+Haftalık kaynak taramasına ek olarak tüm koleksiyonu çapraz tara —
+`mobile-code-review` skill'inin "Skill / Doküman PR'ları" bölümündeki kontrollerle:
+aynı konunun iki skill'de anlatılması, çelişen kod örnekleri, güncelliğini yitirmiş
+sınır tabloları, description tetikleyici çakışmaları. Bulgular normal bakım PR'ının
+ayrı bir bölümünde raporlanır; incelenen ve temiz çıkan skill'lerin damgası güncellenir.
+
+---
+
 ## 5. Log
 
 Her turda `docs/maintenance-log.md` dosyasının **başına** bir satır ekle:

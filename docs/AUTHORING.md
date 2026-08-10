@@ -18,6 +18,7 @@ Klasör adı = frontmatter'daki `name` = küçük harf, kelimeler `-` ile ayrıl
 ```yaml
 ---
 name: android-compose-ui
+last_reviewed: 2026-08        # YYYY-MM; bakım turları günceller, 6+ ay eskiyse CI uyarır
 description: >
   Ne yaptığının 1-2 cümlelik özeti.
 
@@ -118,6 +119,7 @@ Kontrol ettikleri:
 - Katalogda anılan ama var olmayan skill yok (yeniden adlandırma artığı)
 - Satır sayısı 500'ü aşmıyor (uyarı)
 - Checklist bölümü var (uyarı)
+- `last_reviewed` damgası var, formatı doğru ve 6 aydan eski değil (uyarı)
 
 CI'da `.github/workflows/validate.yml` ile her PR'da otomatik çalışır.
 

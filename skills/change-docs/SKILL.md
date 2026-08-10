@@ -1,5 +1,6 @@
 ---
 name: change-docs
+last_reviewed: 2026-08
 description: >
   Tamamlanmış işlerin kaydı: feature dokümanı (ne geldi, nasıl çalışıyor), fix dokümanı
   (kök neden + tekrar önleme), refactor dokümanı (önce/sonra + migration rehberi) ve

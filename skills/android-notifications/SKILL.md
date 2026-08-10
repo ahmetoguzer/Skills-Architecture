@@ -1,5 +1,6 @@
 ---
 name: android-notifications
+last_reviewed: 2026-08
 description: >
   Bildirim mimarisi: FCM entegrasyonu ve token yaşam döngüsü, POST_NOTIFICATIONS izin akışı,
   kanal (channel) tasarımı, data vs notification payload kararı, deep link ile açılış,

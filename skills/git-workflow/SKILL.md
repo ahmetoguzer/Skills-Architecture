@@ -1,5 +1,6 @@
 ---
 name: git-workflow
+last_reviewed: 2026-08
 description: >
   Git ve PR akışı: branch isimlendirme ve tabandan açma, atomik commit stratejisi,
   commit mesajı formatı, rebase vs merge kararı, PR açma/güncelleme, review yanıtlama,

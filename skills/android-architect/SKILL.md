@@ -1,5 +1,6 @@
 ---
 name: android-architect
+last_reviewed: 2026-08
 description: >
   Architect-level Android skill: the architectural authority for layer boundaries,
   module structure, Clean Architecture, the MVVM-vs-MVI decision, Hilt DI design, and

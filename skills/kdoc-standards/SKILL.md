@@ -1,5 +1,6 @@
 ---
 name: kdoc-standards
+last_reviewed: 2026-08
 description: >
   KDoc ve kod içi yorum standartları: ne dokümante edilir ne edilmez, KDoc etiketleri,
   public API sözleşmesi yazımı, "neden" yorumları, TODO/FIXME disiplini, Swift tarafında

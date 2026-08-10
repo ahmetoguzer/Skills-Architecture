@@ -1,5 +1,6 @@
 ---
 name: ios-swift-architect
+last_reviewed: 2026-08
 description: >
   iOS/Swift mimari uzmanlığı: SwiftUI + Observation ile MVVM, Swift Concurrency (async/await,
   actor, Sendable), modüler paketleme (SPM), dependency injection, networking katmanı,

@@ -1,5 +1,6 @@
 ---
 name: mobile-code-review
+last_reviewed: 2026-08
 description: >
   Android/iOS kod incelemesi: PR review, mimari uyum kontrolü, katman ihlali tespiti,
   coroutine/concurrency hataları, bellek sızıntısı riskleri, Compose anti-pattern'leri,

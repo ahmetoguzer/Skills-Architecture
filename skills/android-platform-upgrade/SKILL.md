@@ -1,5 +1,6 @@
 ---
 name: android-platform-upgrade
+last_reviewed: 2026-08
 description: >
   targetSdk yükseltme ve platform uyum kapıları: edge-to-edge zorunluluğu, predictive back,
   foreground service türleri, 16 KB page size, bildirim/fotoğraf izin modeli değişiklikleri,

@@ -1,5 +1,6 @@
 ---
 name: mobile-analytics
+last_reviewed: 2026-08
 description: >
   Analytics ve event tracking mimarisi: event taksonomisi ve isimlendirme, tracking'in
   hangi katmandan gönderileceği, sağlayıcı soyutlaması (Firebase/Tealium/Amplitude),

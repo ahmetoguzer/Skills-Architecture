@@ -1,5 +1,6 @@
 ---
 name: docs-guide
+last_reviewed: 2026-08
 description: >
   Dokümantasyon yönlendiricisi: bir bilginin skill'e mi, docs/ altına mı, kod yorumuna mı
   yoksa hiçbir yere mi ait olduğuna karar verir. docs/ taksonomisini, modül-local override

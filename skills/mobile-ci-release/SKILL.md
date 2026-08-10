@@ -1,5 +1,6 @@
 ---
 name: mobile-ci-release
+last_reviewed: 2026-08
 description: >
   Mobil CI/CD ve yayın süreci uzmanlığı: GitHub Actions ve Jenkins pipeline'ları,
   Gradle/Xcode build akışları, statik analiz kapıları (detekt/ktlint/SonarQube),

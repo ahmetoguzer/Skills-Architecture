@@ -1,5 +1,6 @@
 ---
 name: android-performance
+last_reviewed: 2026-08
 description: >
   Android performans ve kararlılık uzmanlığı: startup süresi, jank/frame drop, recomposition
   optimizasyonu, bellek sızıntısı (LeakCanary), APK/AAB boyutu, baseline profile, R8/ProGuard,

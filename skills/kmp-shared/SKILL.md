@@ -1,5 +1,6 @@
 ---
 name: kmp-shared
+last_reviewed: 2026-08
 description: >
   Kotlin Multiplatform (KMP) uzmanlığı: Android + iOS ortak modül tasarımı, expect/actual,
   source set hiyerarşisi, Ktor/SQLDelight/koin ile multiplatform data katmanı,

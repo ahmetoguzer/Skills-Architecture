@@ -1,0 +1,154 @@
+# Yönlendirme eval seti
+#
+# Her vaka: kullanıcının yazabileceği bir istek + doğru kabul edilen skill(ler).
+# `expected` bir LİSTE ve "kabul edilebilir sahipler" anlamına gelir — seçilen skill
+# listedekilerden BİRİ ise vaka geçer. İlk eleman ideal cevaptır.
+#
+# Nasıl koşulur: değerlendirici (bakım ajanı veya insan) YALNIZCA skill
+# description'larını okur — içerikleri değil — ve her input için hangi skill'i
+# yükleyeceğine karar verir. Prosedür: docs/MAINTENANCE.md → "Her 4. tur".
+#
+# Yeni vaka ekleme kuralı: gerçek kullanımda bir yanlış yönlendirme yaşandığında
+# o istek buraya vaka olarak eklenir (regresyon testi mantığı). `trap: true`
+# işaretli vakalar bilinçli olarak iki alana birden dokunan tuzaklardır.
+
+cases:
+  # ── Çekirdek ──────────────────────────────────────────────
+  - input: "mimari nasıl olmalı, katmanları nasıl bölmeliyim"
+    expected: [android-architect]
+  - input: "bu use case hangi modüle koyulmalı"
+    expected: [android-architect]
+  - input: "MVVM mi MVI mı kullanmalıyım bu ekran için"
+    expected: [android-architect]
+  - input: "sıfırdan profil feature'ı iskeletle"
+    expected: [feature-scaffold, delivery-pipeline]
+  - input: "sepete kupon kodu özelliği ekle"
+    expected: [delivery-pipeline]
+  - input: "uygulama offline da çalışsın, cache'ten göstersin"
+    expected: [android-data-layer]
+  - input: "Room migration nasıl yazılır"
+    expected: [android-data-layer]
+  - input: "bu ekrana shimmer skeleton ekle"
+    expected: [android-compose-ui]
+  - input: "design system ve tema kur"
+    expected: [android-compose-ui]
+  - input: "detay ekranına parametre nasıl geçerim"
+    expected: [android-navigation]
+  - input: "Google ile giriş ekle"
+    expected: [android-auth-credentials]
+  - input: "passkey desteği ekleyelim"
+    expected: [android-auth-credentials]
+  - input: "bildirim kanallarını nasıl kurmalıyım"
+    expected: [android-notifications]
+  - input: "QR kod okuyucu ekle"
+    expected: [android-media-camera]
+  - input: "satın alma eventi nereden gönderilmeli"
+    expected: [mobile-analytics]
+  - input: "uygulamaya AI ile özetleme özelliği ekleyelim"
+    expected: [on-device-ai]
+  - input: "yeni checkout'u önce kullanıcıların yüzde onuna açalım"
+    expected: [feature-flags]
+  - input: "ödemeyi uzaktan kapatabileceğimiz bir mekanizma olsun"
+    expected: [feature-flags]
+
+  # ── Kalite ────────────────────────────────────────────────
+  - input: "bu flow'u nasıl test ederim"
+    expected: [android-testing]
+  - input: "testler bazen geçiyor bazen kalıyor"
+    expected: [android-testing]
+  - input: "uygulama açılışı 3 saniye sürüyor"
+    expected: [android-performance]
+  - input: "liste kaydırırken takılıyor"
+    expected: [android-performance]
+  - input: "API anahtarını nerede saklamalıyım"
+    expected: [android-security]
+  - input: "certificate pinning ekleyelim"
+    expected: [android-security]
+  - input: "üretimde crash oranı arttı"
+    expected: [mobile-observability]
+  - input: "kullanıcı hata bildiriyor ama ben tekrarlayamıyorum"
+    expected: [mobile-observability]
+  - input: "şu PR'ı incele"
+    expected: [mobile-code-review]
+
+  # ── Platform ──────────────────────────────────────────────
+  - input: "ffmpeg entegre edeceğim"
+    expected: [android-native-ndk]
+  - input: "tombstone dosyasında SIGSEGV var, nasıl analiz ederim"
+    expected: [android-native-ndk]
+  - input: "bu modülü iOS ile paylaşmak istiyorum"
+    expected: [kmp-shared]
+  - input: "SwiftUI'da liste ekranı nasıl yazılır"
+    expected: [ios-swift-architect]
+  - input: "tablette liste ve detay yan yana görünsün"
+    expected: [android-adaptive-formfactors]
+  - input: "ana ekrana widget ekleyelim"
+    expected: [android-adaptive-formfactors]
+  - input: "targetSdk 36'ya çıkacağız"
+    expected: [android-platform-upgrade]
+  - input: "eski XML ekranını Compose'a çevir"
+    expected: [xml-compose-migration]
+
+  # ── Süreç ─────────────────────────────────────────────────
+  - input: "build 8 dakika sürüyor"
+    expected: [android-gradle-build]
+  - input: "duplicate class hatası alıyorum"
+    expected: [android-gradle-build]
+  - input: "merge conflict çıktı, nasıl çözerim"
+    expected: [git-workflow]
+  - input: "her PR'da testler otomatik koşsun"
+    expected: [mobile-ci-release]
+  - input: "Play Store'a otomatik yükleme kuralım"
+    expected: [mobile-ci-release]
+
+  # ── Dokümantasyon ─────────────────────────────────────────
+  - input: "bu kuralı nereye yazmalıyız"
+    expected: [docs-guide]
+  - input: "Retrofit'ten Ktor'a geçiş kararını kayıt altına al"
+    expected: [adr]
+  - input: "büyük bir refactor planlıyoruz, kodlamadan önce yazalım"
+    expected: [design-doc]
+  - input: "bu fix için kök neden dokümanı yaz"
+    expected: [change-docs]
+  - input: "release notes hazırla"
+    expected: [change-docs]
+  - input: "bu public fonksiyona KDoc yaz"
+    expected: [kdoc-standards]
+
+  # ── Tuzaklar: iki alana dokunan ifadeler ──────────────────
+  - input: "login ekranı çok yavaş açılıyor"
+    expected: [android-performance]        # auth DEĞİL — asıl dert hız
+    trap: true
+  - input: "kullanıcı çıkış yapınca token silinmiyor"
+    expected: [android-auth-credentials]   # security DEĞİL — logout akışı
+    trap: true
+  - input: "build süresi çok uzun, geliştirme yavaşladı"
+    expected: [android-gradle-build]       # performance DEĞİL — build vs runtime
+    trap: true
+  - input: "tablette login ekranı bozuk görünüyor"
+    expected: [android-adaptive-formfactors]  # auth/compose DEĞİL — düzen sorunu
+    trap: true
+  - input: "üretimde ödeme başarı oranı düştü"
+    expected: [mobile-observability]       # analytics DEĞİL — sistem sağlığı
+    trap: true
+  - input: "Android 16'ya güncelleyen kullanıcılarda uygulama çöküyor"
+    expected: [android-platform-upgrade]   # performance/observability DEĞİL — sürüm uyumu
+    trap: true
+  - input: "bildirime tıklayınca yanlış ekran açılıyor"
+    expected: [android-notifications, android-navigation]  # ikisi de kabul — PendingIntent/deep link kesişimi
+    trap: true
+  - input: "biyometrik girişte anahtar geçersiz oldu hatası"
+    expected: [android-security, android-auth-credentials] # kripto bağlama security'de, akış auth'ta
+    trap: true
+  - input: "kamera görüntüsünde nesne tanıma yapalım"
+    expected: [android-media-camera, on-device-ai]         # boru hattı + model
+    trap: true
+  - input: "Compose'da geri tuşu beklediğim gibi çalışmıyor"
+    expected: [android-navigation, android-platform-upgrade]  # BackHandler / predictive back
+    trap: true
+  - input: "bu özellik iOS'ta da çalışsın"
+    expected: [kmp-shared]                 # ios-swift DEĞİL — paylaşım kararı önce
+    trap: true
+  - input: "eski ekranı yenileyelim, modern görünsün"
+    expected: [xml-compose-migration]      # compose-ui DEĞİL — mevcut ekranın taşınması
+    trap: true

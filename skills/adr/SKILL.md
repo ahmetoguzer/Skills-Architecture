@@ -1,5 +1,6 @@
 ---
 name: adr
+last_reviewed: 2026-08
 description: >
   Architecture Decision Record yazma: geri döndürülmesi pahalı mimari kararları bağlamı,
   değerlendirilen alternatifleri, sonucu ve kabul edilen bedelleri ile kayıt altına alır.

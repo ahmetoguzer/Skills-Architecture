@@ -1,5 +1,6 @@
 ---
 name: android-security
+last_reviewed: 2026-08
 description: >
   Android güvenlik ve gizlilik uzmanlığı: güvenli veri saklama (EncryptedSharedPreferences,
   Keystore), network güvenliği (TLS, certificate pinning), token saklama ve transport güvenliği,

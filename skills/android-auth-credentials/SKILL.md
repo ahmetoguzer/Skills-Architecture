@@ -1,5 +1,6 @@
 ---
 name: android-auth-credentials
+last_reviewed: 2026-08
 description: >
   Modern kimlik doğrulama: Credential Manager API, passkey (WebAuthn/FIDO2), parola ve
   federated sign-in (Sign in with Google), biyometrik ile yerel kilit, oturum ve token

@@ -1,5 +1,6 @@
 ---
 name: android-data-layer
+last_reviewed: 2026-08
 description: >
   Android veri katmanı uzmanlığı: offline-first mimari, Room, Retrofit/Ktor, DataStore,
   Paging 3, WorkManager ile senkronizasyon, cache invalidation, çakışma çözümü,

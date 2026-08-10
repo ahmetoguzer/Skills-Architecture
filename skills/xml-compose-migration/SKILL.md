@@ -1,5 +1,6 @@
 ---
 name: xml-compose-migration
+last_reviewed: 2026-08
 description: >
   XML/Fragment tabanlı ekranların Jetpack Compose'a kademeli taşınması: interop stratejisi
   (ComposeView / AndroidView), Fragment'tan Compose'a geçiş sırası, XML ViewModel'ini

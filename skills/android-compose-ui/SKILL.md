@@ -1,5 +1,6 @@
 ---
 name: android-compose-ui
+last_reviewed: 2026-08
 description: >
   Jetpack Compose UI uzmanlığı: ekran yazma, design system kurma, Material 3 theming,
   animasyon, custom layout, accessibility ve preview stratejisi.

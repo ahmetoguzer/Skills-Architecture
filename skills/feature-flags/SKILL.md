@@ -1,5 +1,6 @@
 ---
 name: feature-flags
+last_reviewed: 2026-08
 description: >
   Feature flag ve deneme (experimentation) mimarisi: flag türleri ve yaşam süreleri,
   Remote Config / kendi sunucun ile dağıtım, varsayılan değer ve offline davranışı,

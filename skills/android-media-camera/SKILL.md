@@ -1,5 +1,6 @@
 ---
 name: android-media-camera
+last_reviewed: 2026-08
 description: >
   Kamera ve medya: CameraX (preview, capture, analysis, video), Media3/ExoPlayer ile
   video-ses oynatma, medya seçimi (Photo Picker), görüntü yükleme ve önbellekleme (Coil),

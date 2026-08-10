@@ -1,5 +1,6 @@
 ---
 name: mobile-observability
+last_reviewed: 2026-08
 description: >
   Üretim gözlemlenebilirliği: crash raporlama (Crashlytics/Sentry), yapılandırılmış loglama,
   custom trace ve performans izleme, non-fatal hata kaydı, breadcrumb ve kullanıcı bağlamı,

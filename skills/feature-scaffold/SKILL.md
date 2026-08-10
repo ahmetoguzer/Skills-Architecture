@@ -1,5 +1,6 @@
 ---
 name: feature-scaffold
+last_reviewed: 2026-08
 description: >
   Domain + data + UI katmanlarını kapsayan yeni bir feature'ı sıfırdan iskeletleyen skill:
   modül oluşturma, paket yapısı, model/UseCase/Repository/DataSource/ViewModel/Screen dosyaları,

@@ -1,5 +1,6 @@
 ---
 name: android-adaptive-formfactors
+last_reviewed: 2026-08
 description: >
   Farklı form faktörlerine uyum: tablet ve büyük ekran düzenleri, katlanabilir (foldable)
   cihaz duruşları, list-detail ve supporting-pane kalıpları, pencere boyutu sınıfları,

@@ -1,5 +1,6 @@
 ---
 name: delivery-pipeline
+last_reviewed: 2026-08
 description: >
   Önemsiz olmayan her değişikliği uçtan uca yöneten orkestratör skill: yeni feature, bug fix
   veya refactor. Akış: netleştir → yönlendir → planla → fazlara böl → kodla → test et →
@@ -221,6 +222,19 @@ PR açıklaması plan dokümanından türer: kapsam, fazlar, test durumu, kapsam
 
 ---
 
+## Faz 10 — Retrospektif (skill geri beslemesi)
+
+İş kapanırken tek soru: **yüklenen skill'lerden herhangi biri yanlış, eksik veya
+çelişkili miydi?** Yanlış tetiklenen, hatalı bilgi veren veya durumu hiç kapsamayan
+bir skill varsa Skills-Architecture reposunda `skill-bug` şablonuyla issue aç
+(yanlış tetiklemeyse vakayı `evals/routing.yaml`'a eklet).
+
+Bu 30 saniyelik adım, koleksiyonun gerçek kullanımdan öğrenmesini sağlayan tek
+mekanizmadır — atlanırsa skill'ler raf dokümanına dönüşür. Sorun yoksa hiçbir şey
+yazma, sessizce bitir.
+
+---
+
 ## Pipeline Checklist
 
 - [ ] Belirsizlikler netleştirildi (en fazla 3-4 soru, kodda cevabı olan sorulmadı)
@@ -233,3 +247,4 @@ PR açıklaması plan dokümanından türer: kapsam, fazlar, test durumu, kapsam
 - [ ] Self-review yapıldı, plan dışı değişiklik yok
 - [ ] Commit onayı alındı
 - [ ] Push/PR onayı ayrıca alındı
+- [ ] Retrospektif: skill hatası varsa issue açıldı, yoksa sessizce geçildi
