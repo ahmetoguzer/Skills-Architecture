@@ -64,7 +64,8 @@ target_compile_options(myapp PRIVATE -Wall -Wextra -fvisibility=hidden)
 find_library(log-lib log)
 target_link_libraries(myapp ${log-lib})
 
-# 16 KB page size uyumu (Android 15+ cihazlarda zorunlu)
+# 16 KB page size uyumu (Android 15+ cihazlarda zorunlu; sürüm takvimi ve
+# üçüncü parti .so denetimi için android-platform-upgrade skill'ine bak)
 target_link_options(myapp PRIVATE "-Wl,-z,max-page-size=16384")
 ```
 

@@ -181,7 +181,7 @@ delivery-pipeline devreye girer:
 | "Ekranlar arası nasıl geçerim?" | android-navigation | android-architect |
 | "Login akışını kur" | android-auth-credentials | android-security |
 | "Push bildirim gelmiyor" | android-notifications | mobile-observability |
-| "Tabletde düzen bozuk" | android-adaptive-formfactors | android-compose-ui |
+| "Tablette düzen bozuk" | android-adaptive-formfactors | android-compose-ui |
 | "Android 15'te çöküyor" | android-platform-upgrade | android-performance |
 | "Üretimde crash arttı" | mobile-observability | android-testing |
 | "Özelliği kademeli açalım" | feature-flags | mobile-ci-release |

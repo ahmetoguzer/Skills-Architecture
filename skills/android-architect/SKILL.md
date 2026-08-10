@@ -1,16 +1,17 @@
 ---
 name: android-architect
 description: >
-  Architect-level Android development skill for modern Kotlin projects.
-  Use this skill whenever the user asks about Android app architecture, wants to scaffold a feature,
-  asks how to structure a module, needs code for ViewModel/UseCase/Repository, wants to implement
-  Jetpack Compose screens, set up Hilt dependency injection, design multi-module projects, handle
-  navigation, manage state with StateFlow/MVI, or write unit/integration tests.
+  Architect-level Android skill: the architectural authority for layer boundaries,
+  module structure, Clean Architecture, the MVVM-vs-MVI decision, Hilt DI design, and
+  ViewModel/UseCase/Repository patterns in modern Kotlin projects.
 
-  Trigger on ANY Android-related request, including: "Android'de nasıl yaparım", "feature ekle",
-  "mimari nasıl olmalı", "clean architecture", "compose screen yaz", "hilt setup", "flow kullan",
-  "multi-module", "coroutine", "repository pattern", "usecase", "viewmodel". Even vague requests
-  like "Android uygulamam var, X özelliği eklemek istiyorum" should trigger this skill.
+  Trigger on: "mimari nasıl olmalı", "clean architecture", "katman sınırı", "hangi modüle
+  koyayım", "multi-module tasarımı", "MVVM mi MVI mı", "repository pattern", "usecase",
+  "viewmodel yapısı", "hilt scope", "architecture", "layer boundary". Also trigger on vague
+  Android requests with no clearer owner ("Android uygulamam var, X eklemek istiyorum") —
+  then route onward. Hand off: full-feature scaffolding → feature-scaffold, screen/UI work →
+  android-compose-ui, navigation → android-navigation, tests → android-testing,
+  end-to-end delivery of a change → delivery-pipeline (see Related Skills table).
 ---
 
 # Android Architect Skill
@@ -251,7 +252,10 @@ Key rules:
 - `:data` depends on `:domain` (to implement interfaces)
 - `:core:*` modules are shared infrastructure — keep them lean
 
-Navigation between features is done via a shared `:core:navigation` module that holds route definitions.
+Navigation: route definitions live **inside each feature module**; the navigation
+*decision* (which route to go to) is made in the `:app` composition root via callbacks.
+A shared `:core:navigation` module is a last resort, only for route contracts that
+multiple features genuinely must reference. Full rules: `android-navigation` skill.
 
 ---
 

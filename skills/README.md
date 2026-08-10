@@ -107,6 +107,7 @@ Sık karışan ayrımlar:
 | `mobile-observability` vs `android-performance` | Üretimde **ne oluyor** vs lokalde **neden yavaş** |
 | `feature-flags` vs `mobile-ci-release` | Uygulama içi açma/kapama vs mağaza staged rollout |
 | `on-device-ai` vs `android-media-camera` | Model/inference vs kamera-medya boru hattı |
+| `mobile-analytics` vs `mobile-observability` | Kullanıcı **davranışı** ölçümü vs sistem **sağlığı** (crash/hata/gecikme) |
 
 ## Yeni Skill Ekleme
 

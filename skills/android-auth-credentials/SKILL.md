@@ -134,9 +134,9 @@ val promptInfo = BiometricPrompt.PromptInfo.Builder()
 BiometricPrompt(activity, executor, callback).authenticate(promptInfo, cryptoObject)
 ```
 
-`CryptoObject` olmadan biyometrik yalnızca bir UI kapısıdır — hook'lanarak atlatılabilir.
-Gerçek koruma için oturum token'ını biyometrikle kilitlenmiş bir Keystore anahtarıyla
-şifrele (`android-security`).
+`CryptoObject` olmadan biyometrik yalnızca bir UI kapısıdır. Anahtar üretimi ve
+kriptografik bağlama kuralları `android-security` skill'inde — orada tanımlı
+`getOrCreateKey` desenini kullan, burada yeniden kurma.
 
 `setInvalidatedByBiometricEnrollment(true)`: yeni parmak izi eklendiğinde anahtar geçersiz
 olsun — başkası kendi parmağını ekleyip hesaba erişemesin.
@@ -171,7 +171,8 @@ biri unutulur ve yetkisiz erişim açığı doğar.
 
 Kurallar:
 - Access token kısa ömürlü (dakikalar), refresh token rotasyonlu
-- 401 yanıtında tek bir yerde refresh dene (mutex ile tekilleştir), başarısızsa oturumu kapat
+- 401 yanıtında tek bir yerde refresh dene (mutex ile tekilleştir), başarısızsa oturumu kapat —
+  `Interceptor`/`Authenticator` implementasyonu `android-security` skill'inde
 - Sunucu tarafı oturum iptali desteklenmeli — istemci token'ı silmek yetmez
 
 ---

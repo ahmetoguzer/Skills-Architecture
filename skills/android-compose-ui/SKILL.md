@@ -2,13 +2,12 @@
 name: android-compose-ui
 description: >
   Jetpack Compose UI uzmanlığı: ekran yazma, design system kurma, Material 3 theming,
-  animasyon, custom layout, accessibility, adaptive/responsive tasarım ve preview stratejisi.
+  animasyon, custom layout, accessibility ve preview stratejisi.
 
   Şu isteklerde tetiklen: "compose ekranı yaz", "design system kur", "theme/tema oluştur",
   "Material 3", "dark mode", "animasyon ekle", "custom layout", "LazyColumn performansı",
-  "bottom sheet", "accessibility / erişilebilirlik", "tablet / foldable desteği",
-  "preview yaz", "component library", "shimmer/skeleton", "custom Modifier".
-  Genel mimari sorusu ise android-architect skill'ine devret.
+  "bottom sheet", "accessibility / erişilebilirlik", "preview yaz", "component library", "shimmer/skeleton", "custom Modifier".
+  Genel mimari sorusu android-architect'e, tablet/foldable düzen kararı android-adaptive-formfactors'a devredilir.
 ---
 
 # Android Compose UI Skill
@@ -186,23 +185,13 @@ Detaylı recomposition ve stability konuları için `references/compose-best-pra
 
 ---
 
-## Adaptive / Responsive
+## Adaptive Düzen — Devret
 
-```kotlin
-@Composable
-fun HomeRoute(windowSizeClass: WindowSizeClass) {
-    when (windowSizeClass.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> HomeListPane()
-        else -> Row {
-            HomeListPane(Modifier.weight(1f))
-            HomeDetailPane(Modifier.weight(2f))
-        }
-    }
-}
-```
-
-Navigasyon barı da genişliğe göre değişir: Compact → `NavigationBar`,
-Medium → `NavigationRail`, Expanded → `PermanentNavigationDrawer`.
+Pencere boyutuna göre değişen düzen (tablet, foldable, list-detail, navigasyon
+bileşeni seçimi) bu skill'in kapsamı **dışındadır** — `android-adaptive-formfactors`
+skill'ini yükle. Buradaki kural yalnızca şudur: bileşenlerini sabit genişliğe değil
+`Modifier`'dan gelen kısıtlara göre yaz ki adaptive düzenlerin içinde yeniden
+kullanılabilsinler.
 
 ---
 

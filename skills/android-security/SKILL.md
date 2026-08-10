@@ -2,8 +2,8 @@
 name: android-security
 description: >
   Android güvenlik ve gizlilik uzmanlığı: güvenli veri saklama (EncryptedSharedPreferences,
-  Keystore), network güvenliği (TLS, certificate pinning), kimlik doğrulama ve token yönetimi,
-  biyometrik auth, obfuscation, root/tamper tespiti, izin (permission) hijyeni,
+  Keystore), network güvenliği (TLS, certificate pinning), token saklama ve transport güvenliği,
+  biyometrik-Keystore bağlama, obfuscation, root/tamper tespiti, izin (permission) hijyeni,
   Play Data Safety ve KVKK/GDPR uyumu.
 
   Şu isteklerde tetiklen: "güvenlik", "token nerede saklanır", "şifreleme", "keystore",
@@ -158,25 +158,23 @@ class TokenAuthenticator @Inject constructor(
 ```
 
 Kurallar: access token kısa ömürlü, refresh token rotasyonlu, logout'ta ikisi de silinir,
-401 döngüsü sayaçla kesilir.
+401 döngüsü sayaçla kesilir. Oturum yaşam döngüsü (AuthState, login/logout akışı)
+`android-auth-credentials` skill'indedir; buradaki sınıflar onun transport katmanıdır.
 
 ---
 
-## 4. Biyometrik Kimlik Doğrulama
+## 4. Biyometrik — Kripto Bağlama Kuralları
 
-```kotlin
-val promptInfo = BiometricPrompt.PromptInfo.Builder()
-    .setTitle("Kimliğinizi doğrulayın")
-    .setSubtitle("Hesabınıza erişmek için")
-    .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
-    .build()
+Biyometrik **akış** (prompt, enrollment, yedek yol, oturum kilidi) `android-auth-credentials`
+skill'indedir. Bu skill'in payına düşen, biyometriği kriptografik olarak anlamlı kılmak:
 
-BiometricPrompt(activity, executor, callback).authenticate(promptInfo, cryptoObject)
-```
-
-Sadece `BIOMETRIC_STRONG` kullan (Class 3). `BIOMETRIC_WEAK` yüz tanıma spoof'una açıktır.
-Gerçek koruma için `CryptoObject` ile bir Keystore anahtarını kilitle — yoksa biyometrik
-sadece bir UI kontrolüdür ve hook'lanarak atlatılabilir.
+- `CryptoObject` olmadan biyometrik yalnızca bir UI kapısıdır — hook'lanarak atlatılabilir.
+  Gerçek koruma: oturum sırrını, `setUserAuthenticationRequired(true)` ile üretilmiş bir
+  Keystore anahtarıyla şifrele (bölüm 1'deki `getOrCreateKey`) ve o anahtarı
+  `CryptoObject` üzerinden aç.
+- Sadece `BIOMETRIC_STRONG` (Class 3) kabul et; `BIOMETRIC_WEAK` yüz tanıma spoof'una açıktır.
+- `setInvalidatedByBiometricEnrollment(true)` — yeni parmak izi eklendiğinde anahtar
+  geçersizleşsin; cihaza sonradan eklenen biyometrik eski sırra erişememeli.
 
 ---
 

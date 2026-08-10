@@ -188,7 +188,8 @@ fun NavGraphBuilder.ordersGraph(
 ```
 
 Route tanımları feature modülünde durur; navigasyon **kararı** `:app` composition root'unda verilir.
-Feature'lar birbirini doğrudan çağırmaz.
+Feature'lar birbirini doğrudan çağırmaz. Deep link, back stack ve sonuç döndürme
+detayları için `android-navigation` skill'ini yükle.
 
 ---
 
