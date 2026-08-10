@@ -97,6 +97,11 @@ Bir skill üç yerde listelenir. Üçünü de güncelle, yoksa skill pratikte g�
 Yeni skill bir başkasının alanına yakınsa **sınır kuralları** tablolarına da bir satır ekle
 (`skills/README.md` ve `docs/ARCHITECTURE.md`) — karışma ihtimalini baştan çöz.
 
+Mevcut bir skill'i **değiştirirken** de aynı disiplin geçerli: değiştirdiğin kuralın
+anahtar terimini tüm `skills/` altında grep'le; başka bir skill aynı konuyu anlatıyorsa
+kopyayı silip devretme notuna çevir. Kontrol maddeleri `mobile-code-review` skill'inin
+"Skill / Doküman PR'ları" bölümünde.
+
 ## 8. Doğrulama
 
 ```bash

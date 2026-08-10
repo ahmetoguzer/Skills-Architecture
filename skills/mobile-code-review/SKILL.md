@@ -161,6 +161,23 @@ Beğendiğin bir şeyi de söyle. Sadece hata listeleyen review, insanları revi
 
 ---
 
+## Skill / Doküman PR'ları
+
+PR bir SKILL.md veya standart dokümanı değiştiriyorsa, kod maddelerine ek olarak
+**tutarlılık çürümesini** ara — iki skill'in aynı konuyu farklı anlatması, koddaki
+çelişkiden daha sinsi bozulur çünkü derleyici yakalamaz:
+
+- Değişen kural, komşu skill'lerde de geçiyor mu? (`grep` ile anahtar terimi tüm
+  `skills/` altında ara) — geçiyorsa ya oradan sil ya devretme notuna çevir;
+  aynı kural iki yerde **yazılmaz**, referanslanır
+- Değişiklik bir sınırı kaydırıyorsa sınır tabloları (`skills/README.md`,
+  `docs/ARCHITECTURE.md`) ve iki tarafın `description` devretme cümleleri güncellendi mi?
+- Yeni tetikleyici ifadeler başka bir skill'in tetikleyicileriyle çakışıyor mu?
+- Kod örneği güncellendiyse, aynı deseni gösteren diğer skill'lerdeki örneklerle
+  çelişiyor mu? (örn. biri `runCatching`, diğeri try/catch öneriyorsa)
+
+---
+
 ## Review Checklist
 
 - [ ] PR tek bir amaca hizmet ediyor ve makul boyutta
@@ -173,3 +190,4 @@ Beğendiğin bir şeyi de söyle. Sadece hata listeleyen review, insanları revi
 - [ ] Yeni davranış için anlamlı test var (happy + error)
 - [ ] Public API'de KDoc, karmaşık mantıkta "neden" yorumu
 - [ ] Ölü kod, yorum satırına alınmış kod, gereksiz TODO yok
+- [ ] Skill/doküman PR'ıysa: değişen kural komşu skill'lerle çelişmiyor, sınır tabloları güncel
