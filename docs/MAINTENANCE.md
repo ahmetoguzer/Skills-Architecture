@@ -105,8 +105,14 @@ Her bulgu için:
   - Ne değişti (skill → değişiklik → kaynak linki tablosu)
   - Teyit edilemeyen / insan kararı bekleyen notlar
   - Yeni skill önerileri (varsa)
-- Değişiklik **yoksa**: PR açma, branch açma. Sadece log'a "değişiklik yok" satırı işle
-  (bunun için tek satırlık commit doğrudan varsayılan dala atılabilir — tek istisna budur).
+- Değişiklik **yoksa**: PR açma, branch açma. Ama log commit'i **atla-ma**:
+  `maintenance-log.md`'ye "değişiklik yok" satırı ekle ve tek satırlık commit olarak
+  doğrudan varsayılan dala push et.
+
+**ZORUNLU: her tur repoya iz bırakır.** Ya bir PR ya da bir log commit'i — üçüncü seçenek
+yok. "Rapor yazdım, yeterli" bir teslimat değildir; oturum raporu kaybolur, repo kalır.
+Push başarısız olursa hatanın tam metnini kapanış raporuna yaz ki mekanizma onarılabilsin.
+Tur checklist'inin son maddesi budur ve atlanması turun başarısız sayılması demektir.
 
 ## 4b. Tazelik damgası
 
@@ -156,5 +162,5 @@ Bu log, hangi haftaların tarandığını kanıtlar; bir hafta atlanırsa görü
 - [ ] Deprecated desen silindi, "eskiden" bölümü eklenmedi
 - [ ] Tutarlılık kontrolü yapıldı (kopya kural / sınır kayması yok)
 - [ ] `validate.sh` + `check-links.sh` temiz
-- [ ] PR açıldı ve özet tablosu içeriyor (veya "değişiklik yok" log'landı)
-- [ ] `maintenance-log.md` güncellendi
+- [ ] **Repoya iz bırakıldı: PR açıldı VEYA "değişiklik yok" log commit'i push edildi** — ikisi de yoksa tur başarısızdır
+- [ ] `maintenance-log.md` güncellendi ve push edildi
