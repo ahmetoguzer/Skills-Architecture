@@ -59,9 +59,18 @@ En fazla 3-4 soru. Fazlası kullanıcıyı yorar; belirsiz kalanı varsayım ola
 | Yeni modül / katman sınırı sorusu | `android-architect` |
 | Domain + data + UI kapsayan yeni feature | `feature-scaffold` → `android-data-layer` → `android-compose-ui` |
 | Sadece ekran değişikliği | `android-compose-ui` |
+| Ekranlar arası geçiş, deep link | `android-navigation` |
+| Login / oturum / passkey | `android-auth-credentials` |
+| Push bildirim | `android-notifications` |
+| Kamera / video / medya | `android-media-camera` |
+| Tablet, foldable, widget | `android-adaptive-formfactors` |
+| AI / ML özelliği | `on-device-ai` |
 | Repository / UseCase / DI | `android-data-layer` |
 | Test yazımı veya düzeltmesi | `android-testing` |
 | Yavaşlık / jank / bellek | `android-performance` |
+| Üretimde hata, crash artışı | `mobile-observability` |
+| Kademeli açılış, deney, kill switch | `feature-flags` |
+| targetSdk / platform yükseltmesi | `android-platform-upgrade` |
 | Token, pinning, izin | `android-security` |
 | Gradle, modül tanımı, bağımlılık | `android-gradle-build` |
 | C/C++ dokunuşu | `android-native-ndk` |

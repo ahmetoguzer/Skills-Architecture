@@ -100,7 +100,7 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'FLAVOR', choices: ['Efes', 'Live'], description: 'Staging / prod')
+        choice(name: 'FLAVOR', choices: ['Staging', 'Prod'], description: 'Hangi flavor')
         booleanParam(name: 'DISTRIBUTE', defaultValue: false, description: 'Testere dağıt')
     }
 
@@ -112,8 +112,8 @@ pipeline {
         stage('Static analysis') {
             parallel {
                 stage('detekt') {
-                    // Takım konfigürasyonu ve baseline `detektAll` görevinde tanımlı;
-                    // çıplak `detekt` bunları almaz ve yanlış yeşil verir.
+                    // Takım konfigürasyonu ve baseline projenin toplu detekt görevinde tanımlıysa
+                    // onu çağır; çıplak `detekt` bunları almaz ve yanlış yeşil verir.
                     steps { sh './gradlew detektAll' }
                 }
                 stage('lint') {
@@ -139,7 +139,7 @@ pipeline {
         stage('SonarQube') {
             when { branch pattern: 'develop|main', comparator: 'REGEXP' }
             steps {
-                withSonarQubeEnv('sonar-kurumsal') { sh './gradlew sonar' }
+                withSonarQubeEnv('sonar-server') { sh './gradlew sonar' }
             }
         }
 
@@ -182,7 +182,7 @@ Jenkins'e özgü tuzaklar:
 | `detekt` yeşil ama takım kuralları uygulanmamış | Projenin kendi toplu görevini çağır (`detektAll` gibi) |
 
 **Flavor'lı projelerde** görev adlarının flavor içerdiğini unutma:
-`testEfesDebugUnitTest`, `assembleLiveRelease`. Jenkins parametresini görev adına
+`testStagingDebugUnitTest`, `assembleProdRelease`. Jenkins parametresini görev adına
 enterpolasyonla geçirmek en sade yol.
 
 ---

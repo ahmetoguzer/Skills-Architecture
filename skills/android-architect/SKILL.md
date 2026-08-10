@@ -322,11 +322,20 @@ Kapsam dışına çıkan konuları ilgili skill'e devret:
 | Konu | Skill |
 |---|---|
 | Compose UI detayı, design system, tema, animasyon | `android-compose-ui` |
+| Ekranlar arası geçiş, route, deep link | `android-navigation` |
+| Tablet/foldable/widget/Wear uyumu | `android-adaptive-formfactors` |
 | Offline-first, Room, Retrofit, Paging, sync | `android-data-layer` |
 | Test yazımı, Turbine, fake/mock, flaky test | `android-testing` |
 | Startup, jank, bellek, APK boyutu | `android-performance` |
 | Gradle, version catalog, convention plugin | `android-gradle-build` |
-| Token saklama, pinning, biyometrik, izinler | `android-security` |
+| Token saklama, pinning, izinler | `android-security` |
+| Login akışı, passkey, oturum yönetimi | `android-auth-credentials` |
+| Push bildirim, FCM, kanal tasarımı | `android-notifications` |
+| Kamera, video, medya seçimi | `android-media-camera` |
+| Cihaz üstü/bulut AI özelliği | `on-device-ai` |
+| Kademeli açılış, A/B testi, kill switch | `feature-flags` |
+| Crash izleme, üretim gözlemlenebilirliği | `mobile-observability` |
+| targetSdk yükseltme, platform uyumu | `android-platform-upgrade` |
 | JNI, C/C++, NDK | `android-native-ndk` |
 | iOS ile kod paylaşımı | `kmp-shared` |
 | CI/CD, imzalama, store yayını | `mobile-ci-release` |

@@ -28,7 +28,13 @@ skill'ler kullanılır. Sonuç:
 | [`feature-scaffold`](skills/feature-scaffold) | Domain + data + UI kapsayan yeni feature iskeleti, isimlendirme, DI, navigasyon |
 | [`android-data-layer`](skills/android-data-layer) | Offline-first/SSOT, Room, Retrofit/Ktor, Paging 3, WorkManager, DataStore |
 | [`android-compose-ui`](skills/android-compose-ui) | Design system, Material 3, theming, animasyon, accessibility, adaptive UI |
+| [`android-navigation`](skills/android-navigation) | Type-safe route'lar, nav graph, deep link/App Links, back stack, adaptive navigasyon |
+| [`android-auth-credentials`](skills/android-auth-credentials) | Credential Manager, passkey, federated giriş, biyometrik kilit, oturum yaşam döngüsü |
+| [`android-notifications`](skills/android-notifications) | FCM, bildirim izni, kanal tasarımı, deep link ile açılış, teslimat sorunları |
+| [`android-media-camera`](skills/android-media-camera) | CameraX, Media3/ExoPlayer, Photo Picker, Coil, ML Kit görüntü analizi |
 | [`mobile-analytics`](skills/mobile-analytics) | Event taksonomisi, ViewModel'den tracking, sağlayıcı soyutlaması, PII koruması |
+| [`on-device-ai`](skills/on-device-ai) | ML Kit, Gemini Nano, LiteRT/MediaPipe, hibrit cihaz-bulut kararı, belirsiz çıktı UX'i |
+| [`feature-flags`](skills/feature-flags) | Flag türleri, kill switch, A/B testi, kademeli açılış, flag borcu temizliği |
 
 ### Kalite — üretileni doğrular
 | Skill | Kapsam |
@@ -36,6 +42,7 @@ skill'ler kullanılır. Sonuç:
 | [`android-testing`](skills/android-testing) | Unit/integration/UI test, Turbine, MockK, fake vs mock, flaky teşhisi |
 | [`android-performance`](skills/android-performance) | Startup, jank, bellek, APK boyutu, baseline profile, ANR, Macrobenchmark |
 | [`android-security`](skills/android-security) | Keystore, cert pinning, token yönetimi, biyometrik, Play Integrity, KVKK/GDPR |
+| [`mobile-observability`](skills/mobile-observability) | Crash/non-fatal raporlama, trace, sürüm sağlığı, alarm eşikleri, olay müdahalesi |
 | [`mobile-code-review`](skills/mobile-code-review) | PR review, katman ihlali, anti-pattern ve güvenlik taraması |
 
 ### Platform
@@ -44,6 +51,8 @@ skill'ler kullanılır. Sonuç:
 | [`android-native-ndk`](skills/android-native-ndk) | JNI, CMake, C++ entegrasyonu, native crash analizi, ABI, 16 KB page size |
 | [`kmp-shared`](skills/kmp-shared) | Kotlin Multiplatform, expect/actual, Ktor/SQLDelight, SKIE, kademeli geçiş |
 | [`ios-swift-architect`](skills/ios-swift-architect) | SwiftUI + Observation, Swift Concurrency, SPM modülerlik, Swift Testing |
+| [`android-adaptive-formfactors`](skills/android-adaptive-formfactors) | Tablet/foldable düzenleri, window size class, Glance widget, Wear/TV kararı |
+| [`android-platform-upgrade`](skills/android-platform-upgrade) | targetSdk yükseltme, edge-to-edge, predictive back, FGS türleri, 16 KB page size |
 | [`xml-compose-migration`](skills/xml-compose-migration) | XML/Fragment → Compose kademeli geçiş, interop, davranış eşdeğerliği |
 
 ### Süreç

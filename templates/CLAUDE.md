@@ -40,11 +40,20 @@ skill'i yükle:
 | `feature-scaffold` | Domain + data + UI kapsayan yeni feature iskeleti |
 | `android-data-layer` | Repository, DataSource, UseCase, offline/cache, Room, sync |
 | `android-compose-ui` | Compose ekranı oluşturma/değiştirme, design system, a11y |
+| `android-navigation` | Ekranlar arası geçiş, route tanımı, deep link, back stack |
+| `android-auth-credentials` | Giriş akışı, passkey, biyometrik kilit, oturum yönetimi |
+| `android-notifications` | Push bildirim, FCM, bildirim izni ve kanalları |
+| `android-media-camera` | Kamera, video oynatma, medya seçimi, görüntü yükleme |
+| `android-adaptive-formfactors` | Tablet/foldable düzeni, widget, Wear/TV kararı |
+| `on-device-ai` | Cihaz üstü/bulut AI özelliği, ML Kit, model entegrasyonu |
 | `android-testing` | ViewModel/UseCase/Repository testleri, Flow testi, UI testi |
 | `android-performance` | Startup, jank, bellek, APK boyutu, baseline profile, ANR |
 | `android-gradle-build` | Gradle, modül tanımı, bağımlılık, build süresi |
 | `android-security` | Token saklama, SSL pinning, izinler, biyometrik |
 | `mobile-analytics` | Event tracking ekleme/taşıma, event taksonomisi |
+| `feature-flags` | Kademeli açılış, A/B testi, kill switch |
+| `mobile-observability` | Üretimdeki crash/hata izleme, alarm, olay müdahalesi |
+| `android-platform-upgrade` | targetSdk yükseltme, yeni Android sürümü uyumu |
 | `mobile-code-review` | PR incelemek veya kodu review'a hazırlamak |
 | `git-workflow` | Branch açma, commit, PR açma/güncelleme |
 | `mobile-ci-release` | CI pipeline, imzalama, store yayını, staged rollout |

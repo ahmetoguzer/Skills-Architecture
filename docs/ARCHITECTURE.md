@@ -62,16 +62,21 @@ kimi zaman doğrudan koda girilir. Tutarlılık burada kaybolur.
                                  │ yönlendirir
      ┌───────────────┬───────────┼───────────────┬──────────────────┐
      ▼               ▼           ▼               ▼                  ▼
-┌──────────┐  ┌────────────┐ ┌────────┐  ┌─────────────┐  ┌────────────────┐
-│ ÇEKİRDEK │  │  KALİTE    │ │PLATFORM│  │   SÜREÇ     │  │ DOKÜMANTASYON  │
-├──────────┤  ├────────────┤ ├────────┤  ├─────────────┤  ├────────────────┤
-│architect │  │testing     │ │ndk     │  │gradle-build │  │docs-guide      │
-│feature-  │  │performance │ │kmp     │  │git-workflow │  │adr             │
-│ scaffold │  │security    │ │ios     │  │ci-release   │  │design-doc      │
-│data-layer│  │code-review │ │xml→cmp │  │             │  │change-docs     │
-│compose-ui│  │            │ │        │  │             │  │kdoc-standards  │
-│analytics │  │            │ │        │  │             │  │                │
-└──────────┘  └────────────┘ └────────┘  └─────────────┘  └────────────────┘
+┌──────────────┐ ┌──────────────┐ ┌───────────────┐ ┌────────────┐ ┌───────────────┐
+│  ÇEKİRDEK    │ │   KALİTE     │ │   PLATFORM    │ │   SÜREÇ    │ │ DOKÜMANTASYON │
+├──────────────┤ ├──────────────┤ ├───────────────┤ ├────────────┤ ├───────────────┤
+│architect     │ │testing       │ │native-ndk     │ │gradle-build│ │docs-guide     │
+│feature-scfld │ │performance   │ │kmp-shared     │ │git-workflow│ │adr            │
+│data-layer    │ │security      │ │ios-swift      │ │ci-release  │ │design-doc     │
+│compose-ui    │ │observability │ │adaptive-form  │ │            │ │change-docs    │
+│navigation    │ │code-review   │ │platform-upgr. │ │            │ │kdoc-standards │
+│auth-creds    │ │              │ │xml→compose    │ │            │ │               │
+│notifications │ │              │ │               │ │            │ │               │
+│media-camera  │ │              │ │               │ │            │ │               │
+│analytics     │ │              │ │               │ │            │ │               │
+│on-device-ai  │ │              │ │               │ │            │ │               │
+│feature-flags │ │              │ │               │ │            │ │               │
+└──────────────┘ └──────────────┘ └───────────────┘ └────────────┘ └───────────────┘
 ```
 
 | Grup | Rolü |
@@ -173,10 +178,21 @@ delivery-pipeline devreye girer:
 | "Bu kararı yazalım" | adr | design-doc |
 | "Nasıl yapacağımızı planlayalım" | design-doc | adr |
 | "Bu bilgiyi nereye yazayım?" | docs-guide | ilgili doküman skill'i |
+| "Ekranlar arası nasıl geçerim?" | android-navigation | android-architect |
+| "Login akışını kur" | android-auth-credentials | android-security |
+| "Push bildirim gelmiyor" | android-notifications | mobile-observability |
+| "Tabletde düzen bozuk" | android-adaptive-formfactors | android-compose-ui |
+| "Android 15'te çöküyor" | android-platform-upgrade | android-performance |
+| "Üretimde crash arttı" | mobile-observability | android-testing |
+| "Özelliği kademeli açalım" | feature-flags | mobile-ci-release |
+| "AI özelliği ekleyelim" | on-device-ai | android-data-layer |
 
-Sık karışan iki ayrım:
+Sık karışan ayrımlar:
 - **build süresi** → gradle-build, **runtime süresi** → performance
 - **neden** (karar anı) → adr, **nasıl** (kodlama öncesi) → design-doc
+- **üretimde ne oluyor** → observability, **lokalde neden yavaş** → performance
+- **giriş akışı** → auth-credentials, **token saklama/pinning** → security
+- **uygulama içi açma-kapama** → feature-flags, **mağaza rollout'u** → ci-release
 
 ---
 
@@ -205,6 +221,12 @@ Skill'ler tek başına çalışmaz; projenin giriş dosyası onlara yönlendirme
 
 **Çok tüketicili standart:** Aynı kuralı hem `CLAUDE.md`'ye hem skill'e yazma.
 `CLAUDE.md` yönlendirir, skill anlatır. Kopyalanan kural er ya da geç çelişir.
+
+**Proje-özel skill'ler bu koleksiyona girmez.** Bir skill yalnızca tek bir üründe
+anlamlıysa (belirli bir SDK entegrasyonu, tek bir ekranın migrasyonu, kurumsal bir
+iç servis) o projenin kendi `.claude/skills/` klasöründe yaşar. Buradaki koleksiyon
+taşınabilir kalır; sağlayıcı adları ve marka isimleri örnek düzeyinde kalır, kural
+düzeyine çıkmaz.
 
 **Modül-local override:** Büyük monorepo'da bir modülün kökündeki talimat dosyası
 o paket için üsttekini ezer. Override yalnızca **farkı** yazar ve genel standarda
