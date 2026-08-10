@@ -153,6 +153,14 @@ Yeni bir skill eklerken:
 
 Detaylı yazım kuralları: [docs/AUTHORING.md](docs/AUTHORING.md)
 
+## Bakım
+
+Koleksiyon **haftalık bakım ajanı** ile diri tutulur: her pazartesi otomatik bir oturum
+Android/iOS/AI dünyasındaki son gelişmeleri tarar, etkilenen skill'leri
+[docs/MAINTENANCE.md](docs/MAINTENANCE.md) prosedürüne göre günceller ve değişiklikleri
+**PR olarak** açar — ana dala doğrudan yazmaz, son karar insandadır.
+Tur geçmişi: [docs/maintenance-log.md](docs/maintenance-log.md).
+
 ## Lisans
 
 MIT
