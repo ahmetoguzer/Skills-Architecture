@@ -215,13 +215,22 @@ desteklemez. Önce kütüphaneleri güncelle, sonra targetSdk'yi.
 ## 7. Play Store Zorunlulukları
 
 - Yeni uygulamalar ve güncellemeler, **son API sürümünden en fazla bir yıl geride**
-  bir targetSdk ile yayınlanabilir; her yıl Ağustos civarı eşik yükselir
+  bir targetSdk ile yayınlanabilir; her yıl Ağustos civarı eşik yükselir.
+  **Güncel eşik (2026):** 31 Ağustos 2026'ya kadar — yeni uygulama/güncellemeler
+  Android 16 (API 36) hedeflemeli; mevcut yayındaki uygulamalar en az Android 15
+  (API 35) hedeflemeli (Wear OS: API 34+, Android TV: API 33+, Android XR: API 34+,
+  Automotive OS: API 32+). API seviyesinin altında kalan submission Play Console'da
+  reddedilir.
 - Eşiği kaçıran uygulama **güncelleme yayınlayamaz**; mevcut sürüm mağazada kalır ama
-  yeni cihazlarda görünmez hale gelir
+  yeni cihazlarda görünmez hale gelir. Yetişemeyen projeler için Google, eşiği
+  1 Kasım 2026'ya erteleyen bir **uzatma başvurusu** sunuyor — otomatik değil,
+  Play Console'dan başvuru gerekir
 - Yükseltmeyi son aya bırakma: davranış değişiklikleri gerçek bug üretir ve
   staged rollout için zaman gerekir
 
 Takvime her yıl **Nisan'da** bir hatırlatma koy; Ağustos'ta panik yaşama.
+
+Kaynak: [Play Console Help — Target API level requirements](https://support.google.com/googleplay/android-developer/answer/11926878) (2026-08 itibarıyla teyitli).
 
 ---
 

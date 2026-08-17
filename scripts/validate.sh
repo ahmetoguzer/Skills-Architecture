@@ -59,7 +59,7 @@ for skill_path in "$SRC_DIR"/*/; do
   if [[ -z "$fm_reviewed" ]]; then
     warn "last_reviewed damgası yok"
   elif [[ "$fm_reviewed" =~ ^([0-9]{4})-([0-9]{2})$ ]]; then
-    stamp_months=$(( ${BASH_REMATCH[1]} * 12 + 10#${BASH_REMATCH[2]} ))
+    stamp_months=$(( BASH_REMATCH[1] * 12 + 10#${BASH_REMATCH[2]} ))
     now_months=$(( $(date +%Y) * 12 + 10#$(date +%m) ))
     age=$(( now_months - stamp_months ))
     [[ "$age" -gt 6 ]] && warn "last_reviewed $fm_reviewed — $age aydır elden geçmemiş"
@@ -122,6 +122,7 @@ for catalog in "${CATALOGS[@]}"; do
 done
 
 # Ters yön: katalogda anılan ama var olmayan skill (yeniden adlandırma artığı)
+# shellcheck disable=SC2016  # backtick'ler burada literal markdown karakteri, komut ikamesi değil
 while IFS= read -r referenced; do
   [[ -d "$SRC_DIR/$referenced" ]] || fail "skills/README.md var olmayan skill'e referans veriyor: $referenced"
 done < <(grep -o '^| \[`[a-z0-9-]*`\](' "$REPO_ROOT/skills/README.md" 2>/dev/null \
