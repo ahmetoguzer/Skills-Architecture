@@ -28,10 +28,10 @@ Ortaklaştır.
 
 ```toml
 [versions]
-agp = "8.7.3"
+agp = "9.2.0"
 kotlin = "2.1.0"
 ksp = "2.1.0-1.0.29"
-composeBom = "2024.12.01"
+composeBom = "2026.08.00"
 hilt = "2.53.1"
 coroutines = "1.9.0"
 retrofit = "2.11.0"
