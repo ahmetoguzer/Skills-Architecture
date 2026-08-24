@@ -100,7 +100,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         pluginManager.apply("org.jetbrains.kotlin.android")
 
         extensions.configure<LibraryExtension> {
-            compileSdk = 35
+            compileSdk = 37
             defaultConfig {
                 minSdk = 24
                 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
