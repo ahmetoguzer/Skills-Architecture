@@ -28,7 +28,10 @@ Ortaklaştır.
 
 ```toml
 [versions]
-agp = "9.2.0"
+agp = "9.3.0"
+# Kotlin 2.4.0 stable'a çıktı ama google/ksp#2964 açık hata kaydı 2.4.0 ile kod
+# üretiminin bozulduğunu gösteriyor — düzeltme onaylanana kadar bilinçli olarak
+# 2.1.0 hattında kalınıyor.
 kotlin = "2.1.0"
 ksp = "2.1.0-1.0.29"
 composeBom = "2026.08.00"
