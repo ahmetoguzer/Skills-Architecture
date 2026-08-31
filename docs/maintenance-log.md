@@ -5,6 +5,7 @@ Yeni satır her zaman **en üste** eklenir.
 
 | Tarih | Sonuç | PR |
 |---|---|---|
+| 2026-08-31 | Tur #6 — 1 güncelleme (AGP 9.3.0); Kotlin/KSP 3. kez ertelendi (artık gerekçeli: google/ksp#2964 açık hata kaydı); `android/skills` hâlâ açık | [#3](https://github.com/ahmetoguzer/Skills-Architecture/pull/3) |
 | 2026-08-24 | Tur #5 — **ilk tam otomatik, elle müdahalesiz tur**; 1 güncelleme (compileSdk 35→37, Compose 1.12 tutarlılığı); Kotlin/KSP 2. kez bilinçli ertelendi; `android/skills` hâlâ açık | [#2](https://github.com/ahmetoguzer/Skills-Architecture/pull/2) |
 | 2026-08-17 | Tur #4 — 3 güncelleme (AGP 9.2.0, Compose BOM 2026.08.00, Play targetSdk eşiği); routing eval 58/58; `android/skills` bulundu (insan kararı bekliyor) | [#1](https://github.com/ahmetoguzer/Skills-Architecture/pull/1) |
 | 2026-08-10 | Değişiklik yok — 3 test turu + teşhis; teslimat mimarisi bu oturuma taşındı | — |
