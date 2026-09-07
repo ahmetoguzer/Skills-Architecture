@@ -1,6 +1,6 @@
 ---
 name: android-gradle-build
-last_reviewed: 2026-08
+last_reviewed: 2026-09
 description: >
   Gradle build sistemi uzmanlığı: version catalog (libs.versions.toml), convention plugin'ler
   (buildSrc / build-logic), multi-module Gradle setup, build variant ve flavor yönetimi,
@@ -28,7 +28,7 @@ Ortaklaştır.
 
 ```toml
 [versions]
-agp = "9.3.0"
+agp = "9.4.0"
 # Kotlin 2.4.0 stable'a çıktı ama google/ksp#2964 açık hata kaydı 2.4.0 ile kod
 # üretiminin bozulduğunu gösteriyor — düzeltme onaylanana kadar bilinçli olarak
 # 2.1.0 hattında kalınıyor.
@@ -188,6 +188,11 @@ android {
 
 Flavor sayısını düşük tut: her flavor × buildType kombinasyonu ayrı bir variant demek,
 build ve test matrisi katlanarak büyür.
+
+**Dynamic feature modülün varsa:** AGP 9.4.0'dan itibaren temel app ile dynamic feature
+modülleri arasında flavor dimension'ların 1:1 eşleşmesi kontrol ediliyor (eksik/fazla/
+uyumsuz dimension varsayılan olarak sadece uyarı verir). AGP 10.0'da bu kontrol **hataya**
+dönüşecek — şimdiden `android.enforceDynamicFeatureVariantMatching=true` ile erken test et.
 
 ---
 
