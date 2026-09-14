@@ -1,6 +1,6 @@
 ---
 name: android-platform-upgrade
-last_reviewed: 2026-08
+last_reviewed: 2026-09
 description: >
   targetSdk yükseltme ve platform uyum kapıları: edge-to-edge zorunluluğu, predictive back,
   foreground service türleri, 16 KB page size, bildirim/fotoğraf izin modeli değişiklikleri,
@@ -230,7 +230,15 @@ desteklemez. Önce kütüphaneleri güncelle, sonra targetSdk'yi.
 
 Takvime her yıl **Nisan'da** bir hatırlatma koy; Ağustos'ta panik yaşama.
 
-Kaynak: [Play Console Help — Target API level requirements](https://support.google.com/googleplay/android-developer/answer/11926878) (2026-08 itibarıyla teyitli).
+**Geliştirici doğrulama (yeni, izlenmeli):** Eylül 2026'dan itibaren Google, Play
+Store dışı yüklemeler dahil Android uygulamalarının cihaza kurulabilmesi için
+geliştirici kimlik doğrulaması zorunluluğu getiriyor. Yürürlük şu an yalnızca
+Brezilya, Endonezya, Singapur ve Tayland'da; küresel genişleme 2027'de. Fully
+managed cihazlar (DO) ve Work Profile (BYOD/COPE) Eylül 2027'ye kadar muaf.
+Henüz hiçbir bölgemizde zorunlu değil ama takibe alınmalı — kapsam genişledikçe
+bu bölüm güncellenecek.
+
+Kaynak: [Play Console Help — Target API level requirements](https://support.google.com/googleplay/android-developer/answer/11926878) (2026-08 itibarıyla teyitli); geliştirici doğrulama duyurusu (2026-09 itibarıyla teyitli).
 
 ---
 

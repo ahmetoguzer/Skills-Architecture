@@ -29,11 +29,12 @@ Ortaklaştır.
 ```toml
 [versions]
 agp = "9.4.0"
-# Kotlin 2.4.0 stable'a çıktı ama google/ksp#2964 açık hata kaydı 2.4.0 ile kod
-# üretiminin bozulduğunu gösteriyor — düzeltme onaylanana kadar bilinçli olarak
-# 2.1.0 hattında kalınıyor.
-kotlin = "2.1.0"
-ksp = "2.1.0-1.0.29"
+kotlin = "2.4.0"
+# KSP sürümleme şeması değişti: artık Kotlin ön ekli değil ("2.1.0-1.0.29" gibi),
+# bağımsız semver ("2.3.x"). 2.3.10+ google/ksp#2964'ü (Kotlin 2.4.0 modül adı
+# çakışması) düzeltiyor; 2.3.12 ayrıca AGP 9'un gömülü Kotlin'iyle R-class
+# çözümleme hatasını da kapatıyor.
+ksp = "2.3.12"
 composeBom = "2026.08.00"
 hilt = "2.53.1"
 coroutines = "1.9.0"
