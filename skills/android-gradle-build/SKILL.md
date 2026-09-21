@@ -29,7 +29,7 @@ Ortaklaştır.
 ```toml
 [versions]
 agp = "9.4.0"
-kotlin = "2.4.0"
+kotlin = "2.4.20"
 # KSP sürümleme şeması değişti: artık Kotlin ön ekli değil ("2.1.0-1.0.29" gibi),
 # bağımsız semver ("2.3.x"). 2.3.10+ google/ksp#2964'ü (Kotlin 2.4.0 modül adı
 # çakışması) düzeltiyor; 2.3.12 ayrıca AGP 9'un gömülü Kotlin'iyle R-class
@@ -228,7 +228,8 @@ kotlin.incremental=true
 | `Unsupported class file major version` | JDK/AGP uyumsuzluğu | JDK 17 kullan, `compileOptions` hizala |
 | `Configuration cache problems` | Task'ta build-time'da Project referansı | `providers.gradleProperty()` ile lazy oku |
 | `Manifest merger failed` | minSdk/izin çakışması | `tools:replace` veya `tools:overrideLibrary` |
-| Kotlin/KSP sürüm uyuşmazlığı | KSP sürümü Kotlin'e bağlı | KSP versiyonunun ilk parçası Kotlin sürümüyle aynı olmalı |
+| Kotlin/KSP sürüm uyuşmazlığı | KSP artık bağımsız semver kullanıyor (Kotlin'e bağlı ön ek yok) | `github.com/google/ksp/releases`'ten hedef Kotlin sürümünü destekleyen en güncel KSP'yi seç |
+| Companion object init sırası değişti (Kotlin 2.4.20+) | Companion object'ler artık JVM davranışıyla eşleşerek superclass→subclass sırayla başlatılıyor | Sınıf hiyerarşisinde companion object'ler arası bağımlılık varsa yükseltmeden önce test et |
 
 ---
 
