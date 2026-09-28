@@ -226,7 +226,7 @@ PR açıklaması plan dokümanından türer: kapsam, fazlar, test durumu, kapsam
 
 İş kapanırken tek soru: **yüklenen skill'lerden herhangi biri yanlış, eksik veya
 çelişkili miydi?** Yanlış tetiklenen, hatalı bilgi veren veya durumu hiç kapsamayan
-bir skill varsa Skills-Architecture reposunda `skill-bug` şablonuyla issue aç
+bir skill varsa claude-code-mobile-skills reposunda `skill-bug` şablonuyla issue aç
 (yanlış tetiklemeyse vakayı `evals/routing.yaml`'a eklet).
 
 Bu 30 saniyelik adım, koleksiyonun gerçek kullanımdan öğrenmesini sağlayan tek
