@@ -43,6 +43,7 @@ Her kaynağı web'den kontrol et; **son 7-10 günün** duyurularına odaklan.
 | ML Kit / Gemini Nano (AICore) duyuruları | Yeni API, cihaz desteği genişlemesi, model değişikliği | `on-device-ai` |
 | Firebase release notes | Crashlytics, Remote Config, FCM, Performance değişiklikleri | `mobile-observability`, `feature-flags`, `android-notifications` |
 | GitHub Actions runner / fastlane releases | Runner imajı, action sürümleri, fastlane kırılmaları | `mobile-ci-release` |
+| Hilt / Dagger, coroutines, Retrofit release notes | `android-gradle-build` version catalog'undaki **diğer** pinlenmiş kütüphanelerin sürümü — yalnızca AGP/Kotlin/KSP/Compose değiştiğinde değil, **her tur** kontrol edilir | `android-gradle-build` |
 
 Mevsimsel yoğunluk: **Google I/O (Mayıs)** ve **WWDC (Haziran)** haftalarında değişiklik
 hacmi yüksek olur — o haftalarda tur daha uzun sürer, normaldir. **Ağustos** civarı Play
@@ -90,6 +91,26 @@ Her bulgu için:
    - **Deprecation** — skill hâlâ eski deseni öneriyorsa: eski deseni **sil**, yenisini yaz
      ("eskiden şöyleydi" bölümü ekleme — ARCHITECTURE.md P-kuralı)
 3. Değişiklik bir skill sınırını etkiliyorsa sınır tablolarını da güncelle
+
+## 2a. Version Catalog İç Tutarlılığı (her tur, zorunlu)
+
+Bir kütüphanenin sürümünü tek başına güncelleyip komşularını unutmak, **kendi
+ürettiğimiz** bir eskime türüdür (bkz. Hilt 2.53.1'in AGP/Kotlin/KSP dört kez
+bump edilirken hiç kontrol edilmemesi — 2026-09 android/skills incelemesinde
+dışarıdan yakalandı). Bunu tekrarlamamak için:
+
+1. `android-gradle-build/SKILL.md`'deki `[versions]` bloğundaki **her** sürümü
+   (agp, kotlin, ksp, composeBom, hilt, coroutines, retrofit) bu turda tek tek
+   gözden geçir — yalnızca o hafta değişen kütüphaneyi değil.
+2. Her biri için: güncel stable sürüm bu mu, pinlenmiş diğer sürümlerle
+   (özellikle Kotlin/KSP) resmi olarak uyumlu mu? Kaynak: kütüphanenin kendi
+   release notes'u veya migration rehberi.
+3. Uyumsuzluk/eskime bulunursa **o an güncelle** (küçük, doğrulanabilir bir
+   sürüm bump'ı) — "ayrı bir konu, başka türe bırak" deme; bu tam olarak
+   sessizce biriken tutarsızlığın kaynağı.
+4. Tümü güncel çıkarsa rapora tek satır not düş: "version catalog iç
+   tutarlılığı kontrol edildi, değişiklik yok" — bu, kontrolün yapıldığının
+   kanıtıdır.
 
 ## 3. Doğrulama
 
@@ -168,6 +189,8 @@ Bu log, hangi haftaların tarandığını kanıtlar; bir hafta atlanırsa görü
 ## Tur Checklist
 
 - [ ] Tablodaki tüm kaynaklar kontrol edildi (erişilemeyenler raporda belirtildi)
+- [ ] `android-gradle-build` version catalog'undaki **tüm** sürümler tek tek gözden
+      geçirildi (yalnızca o hafta değişen değil) — bkz. §2a
 - [ ] Her değişiklik güvenilir kaynakla teyitli, kaynak PR'da linkli
 - [ ] Deprecated desen silindi, "eskiden" bölümü eklenmedi
 - [ ] Tutarlılık kontrolü yapıldı (kopya kural / sınır kayması yok)
