@@ -82,6 +82,17 @@ Every skill pairs a decision guide with runnable code and a checklist, and
 carries bilingual (Turkish/English) trigger phrases in its description so it
 loads correctly regardless of which language you write your request in.
 
+## Requirements
+
+- **[Claude Code](https://claude.com/claude-code)** — this collection uses Claude
+  Code's Skill format (`SKILL.md` + YAML frontmatter, loaded from
+  `~/.claude/skills/` or `<project>/.claude/skills/`). It does not work in the
+  claude.ai web chat.
+- **Git** and **Bash** — for `install.sh`, `validate.sh`, and `check-links.sh`.
+- No language- or platform-specific tooling is required just to *install* the
+  skills; each skill's own prerequisites (Android Studio, Xcode, a Kotlin
+  Multiplatform setup, etc.) only matter once you actually use that skill.
+
 ## Install
 
 ### Personal use (active across all your projects)
