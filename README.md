@@ -28,6 +28,8 @@ on demand and builds to that standard, instead of relying on one giant
 |---|---|
 | [`delivery-pipeline`](skills/delivery-pipeline) | **Default entry point.** clarify → route → plan → phase → code → test → document → self-review → commit → push/PR |
 
+![The delivery pipeline: every change runs the same route, with hard gates at clarify, plan, development, verify, commit, and PR/push](docs/assets/delivery-pipeline.png)
+
 ### Core — produces code
 | Skill | Scope |
 |---|---|
