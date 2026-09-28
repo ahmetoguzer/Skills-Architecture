@@ -57,6 +57,7 @@ taranır — bir desen değişikliği çoğu zaman blog'dan önce referans koda 
 | Repo / Kaynak | Ne aranır | Etkilenen |
 |---|---|---|
 | `github.com/anthropics/skills` | Anthropic'in resmî skill koleksiyonu: yeni skill yazım desenleri, frontmatter konvansiyonları, yeni yayınlanan mobil/ilgili skill'ler | `docs/AUTHORING.md`, skill yapısı geneli |
+| `github.com/android/skills` | Google'ın resmî Android AI-skill koleksiyonu: yeni/güncellenen skill'ler (Compose/testing/performans/build/security/identity/navigation/play alanlarında), sürüm çifti değişiklikleri (2026-09 incelemesinde Hilt farkı buradan yakalandı) | Örtüşen tüm Android skill'leri — bkz. kural 2 (kopyalama, harmanla) |
 | `github.com/android/nowinandroid` | Google'ın referans Android mimarisi: modül yapısı, convention plugin, navigasyon, veri katmanı desen değişimleri | `android-architect`, `feature-scaffold`, `android-gradle-build`, `android-data-layer`, `android-navigation` |
 | `github.com/android/compose-samples` | Güncel Compose desenleri, yeni API kullanım örnekleri | `android-compose-ui`, `android-adaptive-formfactors` |
 | `github.com/android/architecture-samples` | Mimari desen güncellemeleri | `android-architect` |
