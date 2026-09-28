@@ -230,15 +230,16 @@ desteklemez. Önce kütüphaneleri güncelle, sonra targetSdk'yi.
 
 Takvime her yıl **Nisan'da** bir hatırlatma koy; Ağustos'ta panik yaşama.
 
-**Geliştirici doğrulama (yeni, izlenmeli):** Eylül 2026'dan itibaren Google, Play
-Store dışı yüklemeler dahil Android uygulamalarının cihaza kurulabilmesi için
-geliştirici kimlik doğrulaması zorunluluğu getiriyor. Yürürlük şu an yalnızca
-Brezilya, Endonezya, Singapur ve Tayland'da; küresel genişleme 2027'de. Fully
-managed cihazlar (DO) ve Work Profile (BYOD/COPE) Eylül 2027'ye kadar muaf.
-Henüz hiçbir bölgemizde zorunlu değil ama takibe alınmalı — kapsam genişledikçe
-bu bölüm güncellenecek.
+**Geliştirici doğrulama (kesin tarih verildi):** **30 Eylül 2026**'dan itibaren
+sertifikalı Android cihazlarda (Brezilya, Endonezya, Singapur, Tayland) kimliğini
+Google'a doğrulatmamış geliştiricilerin uygulamaları **normal yoldan kurulamıyor**
+— Play Store dahil, Samsung/Xiaomi/OPPO/vivo/Honor/Transsion mağazaları dahil.
+ADB veya "advanced flow" ile kurulum hâlâ mümkün, ama normal kullanıcı akışı
+kapanıyor. Küresel genişleme 2027'de. Fully managed cihazlar (DO) ve Work Profile
+(BYOD/COPE) Eylül 2027'ye kadar muaf. Bu 4 ülkede dağıtım varsa **acil**, yoksa
+izlemeye devam.
 
-Kaynak: [Play Console Help — Target API level requirements](https://support.google.com/googleplay/android-developer/answer/11926878) (2026-08 itibarıyla teyitli); geliştirici doğrulama duyurusu (2026-09 itibarıyla teyitli).
+Kaynak: [Play Console Help — Target API level requirements](https://support.google.com/googleplay/android-developer/answer/11926878) (2026-08 itibarıyla teyitli); [Android developer verification duyurusu](https://android-developers.googleblog.com/2026/06/android-developer-verification.html) (2026-09 itibarıyla teyitli, kesin tarih doğrulandı).
 
 ---
 
