@@ -1,6 +1,6 @@
 ---
 name: on-device-ai
-last_reviewed: 2026-08
+last_reviewed: 2026-09
 description: >
   Cihaz üstü ve hibrit yapay zekâ: ML Kit hazır API'leri, Gemini Nano / ML Kit GenAI ile
   cihazda üretken görevler, bulut LLM'e ne zaman gidileceği, TensorFlow Lite (LiteRT) ve
@@ -10,7 +10,8 @@ description: >
   Şu isteklerde tetiklen: "yapay zekâ ekle", "AI özelliği", "ML Kit", "Gemini Nano",
   "cihazda model çalıştır", "on-device", "TensorFlow Lite", "LiteRT", "MediaPipe",
   "metin özetleme", "OCR", "yüz tanıma", "görüntü sınıflandırma", "çeviri",
-  "LLM entegrasyonu", "akıllı öneri", "model boyutu".
+  "LLM entegrasyonu", "akıllı öneri", "model boyutu", "AI agent", "ajan mimarisi",
+  "tool calling", "ADK", "Agent Development Kit".
 ---
 
 # On-Device AI Skill
@@ -185,6 +186,31 @@ Model çıktısı deterministik değildir. Arayüz bunu yansıtmalı:
 
 Yanlış AI çıktısının maliyeti yüksekse (tıbbi, finansal, hukuki) **insan onayı olmadan
 uygulama** — öneri olarak sun, karar kullanıcının olsun.
+
+---
+
+## Ajan (Agent) Mimarisi Gerekiyorsa — ADK for Kotlin
+
+Yukarıdaki desenlerin hepsi **tek adımlı** görevler içindir (özetle, sınıflandır, tanı).
+İstek çok adımlı bir akışsa — model kendi kendine araç çağırıp sonuca göre bir sonraki
+adıma karar veriyorsa — bu artık bir **agent**'tır, düz bir inference çağrısı değil.
+
+Google'ın **ADK for Kotlin 1.0**'ı (Kotlin Multiplatform üzerine kurulu, sunucudan
+mobile'a aynı API) bunun için hazır bir çerçeve: orkestrasyon, tool/function calling,
+persistence, memory ve human-in-the-loop desenlerini idiomatic Kotlin API'leriyle verir.
+
+- **Cihaz üstü:** LiteRT-LM ile açık modeller (Gemma) çalıştırılır, tam tool calling
+  desteğiyle — agent cihazda kendi araçlarını çağırabilir. ML Kit entegrasyonu beta.
+- **Hibrit:** Firebase AI Logic ile bulut modellerine geçiş — cihazda yeterli değilse
+  agent şeffafça buluta düşer, üstteki hibrit desenle aynı prensip.
+- **Ne zaman düz inference yeter, ne zaman ADK gerekir:** kullanıcı isteği tek bir
+  girdi→çıktı dönüşümüyse (özet, sınıflandırma) ADK gereksiz karmaşıklıktır — yukarıdaki
+  Karar Sırası'nı izle. Model kendi başına birden fazla aracı sırayla çağırıp bir hedefe
+  ilerlemesi gerekiyorsa (ör. "şu bileti araştır, ilgili siparişi bul, taslak yanıt yaz")
+  ADK'nin orkestrasyon katmanı elle yazılan bir state machine'den daha sürdürülebilir.
+
+Henüz savaş görmemiş (1.0, Eylül 2026) — kritik bir akışın tek yolu yapmadan önce
+hata/timeout davranışını kendi projende doğrula.
 
 ---
 
