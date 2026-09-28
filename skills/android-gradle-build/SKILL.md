@@ -36,6 +36,9 @@ kotlin = "2.4.20"
 # çözümleme hatasını da kapatıyor.
 ksp = "2.3.12"
 composeBom = "2026.08.00"
+# BEKLEYEN: android/skills (Google, resmî) 2026-09'da Hilt 2.59.2+ öneriyor (AGP 9
+# upgrade skill'lerinde). Bu turda doğrulanmadı, henüz uygulanmadı — bir sonraki
+# bakım turu §2a (version catalog iç tutarlılığı) kapsamında doğrulayıp güncellesin.
 hilt = "2.53.1"
 coroutines = "1.9.0"
 retrofit = "2.11.0"
