@@ -1,166 +1,185 @@
-# Skills Architecture — Android & Native Mobile
+# Skills Architecture
 
-Android, Kotlin Multiplatform ve iOS geliştirme için **Claude Skills** koleksiyonu.
-Her skill; o alandaki mimari kararları, kod şablonlarını ve kalite kontrol listelerini içerir.
-Claude bir istekle karşılaştığında ilgili skill'i talep anında yükleyip o standartlara göre üretim yapar.
+A production-grade **Claude Skills** collection for Android, Kotlin Multiplatform,
+and iOS development. Each skill packages the architectural decisions, code
+templates, and quality checklists for one domain — Claude loads the right one
+on demand and builds to that standard, instead of relying on one giant
+"you're an Android expert" prompt.
 
-## Neden?
+## Why skills instead of one big prompt?
 
-Tek büyük bir "Android uzmanı" prompt'u yerine **konuya göre ayrılmış, talep anında yüklenen**
-skill'ler kullanılır. Sonuç:
+- **No wasted context.** Only the relevant skill loads for a given request.
+- **Decisions live in one place.** You don't re-explain your architecture in
+  every conversation — it's already written down and versioned.
+- **Team standards version like code.** Update a skill, everyone gets the new
+  standard on their next request.
+- **Process is encoded too.** [`delivery-pipeline`](skills/delivery-pipeline)
+  defines *how* work ships (plan → code → test → document → review → PR), not
+  just how to write it.
 
-- Bağlam israfı yok — sadece ilgili bilgi yüklenir
-- Kararlar tek yerde tanımlı — her sohbette aynı mimariyi tekrar anlatmazsın
-- Ekip standardı versiyonlanır — skill'i güncellersin, herkes yeni standarda geçer
-- Süreç de kodlanır — `delivery-pipeline` işin nasıl teslim edileceğini belirler, sadece nasıl yazılacağını değil
+## What's inside
 
-## Skill Kataloğu
+31 skills across 6 groups. Full routing map and boundary rules:
+**[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** · in-tree index:
+**[skills/README.md](skills/README.md)**.
 
-### Orkestrasyon
-| Skill | Kapsam |
+### Orchestration
+| Skill | Scope |
 |---|---|
-| [`delivery-pipeline`](skills/delivery-pipeline) | **Varsayılan giriş noktası.** netleştir → yönlendir → planla → fazlar → kodla → test → doküman → self-review → commit → push/PR |
+| [`delivery-pipeline`](skills/delivery-pipeline) | **Default entry point.** clarify → route → plan → phase → code → test → document → self-review → commit → push/PR |
 
-### Çekirdek — kod üretir
-| Skill | Kapsam |
+### Core — produces code
+| Skill | Scope |
 |---|---|
-| [`android-architect`](skills/android-architect) | Clean Architecture, MVVM/MVI, Hilt, multi-module, katman sınırları |
-| [`feature-scaffold`](skills/feature-scaffold) | Domain + data + UI kapsayan yeni feature iskeleti, isimlendirme, DI, navigasyon |
+| [`android-architect`](skills/android-architect) | Clean Architecture, MVVM/MVI, Hilt, multi-module, layer boundaries |
+| [`feature-scaffold`](skills/feature-scaffold) | New feature skeleton spanning domain + data + UI, naming, DI, navigation |
 | [`android-data-layer`](skills/android-data-layer) | Offline-first/SSOT, Room, Retrofit/Ktor, Paging 3, WorkManager, DataStore |
-| [`android-compose-ui`](skills/android-compose-ui) | Design system, Material 3, theming, animasyon, accessibility, adaptive UI |
-| [`android-navigation`](skills/android-navigation) | Type-safe route'lar, nav graph, deep link/App Links, back stack, adaptive navigasyon |
-| [`android-auth-credentials`](skills/android-auth-credentials) | Credential Manager, passkey, federated giriş, biyometrik kilit, oturum yaşam döngüsü |
-| [`android-notifications`](skills/android-notifications) | FCM, bildirim izni, kanal tasarımı, deep link ile açılış, teslimat sorunları |
-| [`android-media-camera`](skills/android-media-camera) | CameraX, Media3/ExoPlayer, Photo Picker, Coil, ML Kit görüntü analizi |
-| [`mobile-analytics`](skills/mobile-analytics) | Event taksonomisi, ViewModel'den tracking, sağlayıcı soyutlaması, PII koruması |
-| [`on-device-ai`](skills/on-device-ai) | ML Kit, Gemini Nano, LiteRT/MediaPipe, hibrit cihaz-bulut kararı, belirsiz çıktı UX'i |
-| [`feature-flags`](skills/feature-flags) | Flag türleri, kill switch, A/B testi, kademeli açılış, flag borcu temizliği |
+| [`android-compose-ui`](skills/android-compose-ui) | Design system, Material 3, theming, animation, accessibility, adaptive UI |
+| [`android-navigation`](skills/android-navigation) | Type-safe routes, nav graph, deep links/App Links, back stack, adaptive navigation |
+| [`android-auth-credentials`](skills/android-auth-credentials) | Credential Manager, passkeys, federated sign-in, biometric lock, session lifecycle |
+| [`android-notifications`](skills/android-notifications) | FCM, notification permission, channel design, deep-link opens, delivery issues |
+| [`android-media-camera`](skills/android-media-camera) | CameraX, Media3/ExoPlayer, Photo Picker, Coil, ML Kit image analysis |
+| [`mobile-analytics`](skills/mobile-analytics) | Event taxonomy, tracking from the ViewModel, provider abstraction, PII safety |
+| [`on-device-ai`](skills/on-device-ai) | ML Kit, Gemini Nano, LiteRT/MediaPipe, on-device/cloud hybrid decision, ADK for Kotlin agents |
+| [`feature-flags`](skills/feature-flags) | Flag types, kill switches, A/B tests, staged rollout, flag-debt cleanup |
 
-### Kalite — üretileni doğrular
-| Skill | Kapsam |
+### Quality — verifies what's produced
+| Skill | Scope |
 |---|---|
-| [`android-testing`](skills/android-testing) | Unit/integration/UI test, Turbine, MockK, fake vs mock, flaky teşhisi |
-| [`android-performance`](skills/android-performance) | Startup, jank, bellek, APK boyutu, baseline profile, ANR, Macrobenchmark |
-| [`android-security`](skills/android-security) | Keystore, cert pinning, token yönetimi, biyometrik, Play Integrity, KVKK/GDPR |
-| [`mobile-observability`](skills/mobile-observability) | Crash/non-fatal raporlama, trace, sürüm sağlığı, alarm eşikleri, olay müdahalesi |
-| [`mobile-code-review`](skills/mobile-code-review) | PR review, katman ihlali, anti-pattern ve güvenlik taraması |
+| [`android-testing`](skills/android-testing) | Unit/integration/UI testing, Turbine, MockK, fake vs. mock, flaky-test diagnosis |
+| [`android-performance`](skills/android-performance) | Startup, jank, memory, APK size, baseline profiles, ANRs, Macrobenchmark |
+| [`android-security`](skills/android-security) | Keystore, cert pinning, token handling, biometrics, Play Integrity, privacy compliance |
+| [`mobile-observability`](skills/mobile-observability) | Crash/non-fatal reporting, tracing, release health, alert thresholds, incident response |
+| [`mobile-code-review`](skills/mobile-code-review) | PR review, layer-violation, anti-pattern, and security scanning |
 
 ### Platform
-| Skill | Kapsam |
+| Skill | Scope |
 |---|---|
-| [`android-native-ndk`](skills/android-native-ndk) | JNI, CMake, C++ entegrasyonu, native crash analizi, ABI, 16 KB page size |
-| [`kmp-shared`](skills/kmp-shared) | Kotlin Multiplatform, expect/actual, Ktor/SQLDelight, SKIE, kademeli geçiş |
-| [`ios-swift-architect`](skills/ios-swift-architect) | SwiftUI + Observation, Swift Concurrency, SPM modülerlik, Swift Testing |
-| [`android-adaptive-formfactors`](skills/android-adaptive-formfactors) | Tablet/foldable düzenleri, window size class, Glance widget, Wear/TV kararı |
-| [`android-platform-upgrade`](skills/android-platform-upgrade) | targetSdk yükseltme, edge-to-edge, predictive back, FGS türleri, 16 KB page size |
-| [`xml-compose-migration`](skills/xml-compose-migration) | XML/Fragment → Compose kademeli geçiş, interop, davranış eşdeğerliği |
+| [`android-native-ndk`](skills/android-native-ndk) | JNI, CMake, C++ integration, native crash analysis, ABI, 16 KB page size |
+| [`kmp-shared`](skills/kmp-shared) | Kotlin Multiplatform, expect/actual, Ktor/SQLDelight, SKIE, incremental adoption |
+| [`ios-swift-architect`](skills/ios-swift-architect) | SwiftUI + Observation, Swift Concurrency, SPM modularity, Swift Testing |
+| [`android-adaptive-formfactors`](skills/android-adaptive-formfactors) | Tablet/foldable layouts, window size classes, Glance widgets, Wear/TV decisions |
+| [`android-platform-upgrade`](skills/android-platform-upgrade) | targetSdk upgrades, edge-to-edge, predictive back, foreground service types, 16 KB page size |
+| [`xml-compose-migration`](skills/xml-compose-migration) | Incremental XML/Fragment → Compose migration, interop, behavioral parity |
 
-### Süreç
-| Skill | Kapsam |
+### Process
+| Skill | Scope |
 |---|---|
-| [`android-gradle-build`](skills/android-gradle-build) | Version catalog, convention plugin, build-logic, variant, build hızı |
-| [`git-workflow`](skills/git-workflow) | Branch stratejisi, atomik commit, rebase/merge, PR, conflict çözümü |
-| [`mobile-ci-release`](skills/mobile-ci-release) | GitHub Actions **ve Jenkins**, detekt/Sonar kapıları, imzalama, staged rollout |
+| [`android-gradle-build`](skills/android-gradle-build) | Version catalog, convention plugins, build-logic, variants, build speed |
+| [`git-workflow`](skills/git-workflow) | Branching strategy, atomic commits, rebase/merge, PRs, conflict resolution |
+| [`mobile-ci-release`](skills/mobile-ci-release) | GitHub Actions **and Jenkins**, detekt/Sonar gates, signing, staged rollout |
 
-### Dokümantasyon
-| Skill | Kapsam |
+### Documentation
+| Skill | Scope |
 |---|---|
-| [`docs-guide`](skills/docs-guide) | Bilgi nereye gider: skill mi, `docs/` mı, yorum mu; çok-tüketicili standart yapısı |
-| [`adr`](skills/adr) | Architecture Decision Record: bağlam, alternatifler, karar, kabul edilen bedel |
-| [`design-doc`](skills/design-doc) | Kodlama öncesi teknik tasarım, fazlara bölünmüş teslimat planı |
-| [`change-docs`](skills/change-docs) | feature-doc / fix-doc (kök neden) / refactor-doc / release notes |
-| [`kdoc-standards`](skills/kdoc-standards) | KDoc, "neden" yorumları, TODO disiplini, Dokka, DocC |
+| [`docs-guide`](skills/docs-guide) | Where information belongs: a skill, `docs/`, or a comment; multi-consumer standards |
+| [`adr`](skills/adr) | Architecture Decision Records: context, alternatives, decision, accepted cost |
+| [`design-doc`](skills/design-doc) | Pre-implementation technical design, phased delivery plans |
+| [`change-docs`](skills/change-docs) | Feature docs / root-cause fix docs / refactor docs / release notes |
+| [`kdoc-standards`](skills/kdoc-standards) | KDoc, "why" comments, TODO discipline, Dokka, DocC |
 
-Skill'lerin nasıl birbirine bağlandığı, yönlendirme haritası ve sınır kuralları:
-**[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** · in-tree indeks: **[skills/README.md](skills/README.md)**
+Every skill pairs a decision guide with runnable code and a checklist, and
+carries bilingual (Turkish/English) trigger phrases in its description so it
+loads correctly regardless of which language you write your request in.
 
-## Kurulum
+## Install
 
-### Kişisel kullanım (tüm projelerde aktif)
+### Personal use (active across all your projects)
 
 ```bash
 git clone https://github.com/ahmetoguzer/Skills-Architecture.git
 cd Skills-Architecture
-./scripts/install.sh            # ~/.claude/skills/ altına symlink'ler
+./scripts/install.sh            # symlinks into ~/.claude/skills/
 ```
 
-### Tek bir projede kullanım
+### Single project
 
 ```bash
 git clone https://github.com/ahmetoguzer/Skills-Architecture.git
-./scripts/install.sh --project /yol/projene    # <proje>/.claude/skills/
+./scripts/install.sh --project /path/to/your/project    # <project>/.claude/skills/
 ```
 
-Ya da submodule olarak:
+Or as a submodule:
 
 ```bash
 git submodule add https://github.com/ahmetoguzer/Skills-Architecture.git .claude/skills-architecture
 ln -s ../skills-architecture/skills/android-architect .claude/skills/android-architect
 ```
 
-### Projeye bağlama
+### Wire it into your project
 
-Skill'ler tek başına yeterli değil — projenin **giriş dosyası** onlara yönlendirmeli:
-
-```bash
-cp templates/CLAUDE.md /yol/projene/CLAUDE.md    # sonra <ACILI PARANTEZ> alanlarını doldur
-```
-
-`templates/CLAUDE.md` bilerek yalındır: ne olduğu, varsayılan akış, skill tablosu,
-non-negotiables ve build komutları. Derinlik skill'lerde kalır — aynı kuralı iki yere
-yazarsan biri eskir ve çelişirler.
-
-### Doğrulama
+Skills alone aren't enough — your project's **entry file** needs to point to
+them:
 
 ```bash
-./scripts/validate.sh           # frontmatter, isim eşleşmesi, kırık referans, katalog senkronu
+cp templates/CLAUDE.md /path/to/your/project/CLAUDE.md    # then fill in the <BRACKETED> fields
 ```
 
-## Kullanım
+`templates/CLAUDE.md` is deliberately thin: what the project is, the default
+flow, the skill table, non-negotiables, and build commands. Depth stays in the
+skills — writing the same rule in two places means one of them goes stale and
+they start to contradict each other.
 
-Kurulumdan sonra ayrı bir şey yapman gerekmez — istek yaz, Claude uygun skill'i seçer:
+### Verify
+
+```bash
+./scripts/validate.sh           # frontmatter, name matching, broken references, catalog sync
+./scripts/check-links.sh        # relative links across the repo
+```
+
+## Usage
+
+Nothing to do after install — write a request, Claude picks the right skill:
 
 ```
-"Sepet ekranı için offline çalışan bir feature ekle"
+"Add an offline-capable feature for the cart screen"
    → delivery-pipeline → feature-scaffold → android-data-layer
                        → android-compose-ui → android-testing → change-docs
 
-"Uygulama açılışı 2 saniye sürüyor"
+"App startup takes 2 seconds"
    → android-performance
 
-"Bu PR'ı incele"
+"Review this PR"
    → mobile-code-review
 
-"Bu ekranı iOS'ta da çalıştırmak istiyorum"
+"I want this screen to also run on iOS"
    → kmp-shared (+ ios-swift-architect)
 
-"Şu eski Fragment'ı Compose'a taşı"
+"Migrate this old Fragment to Compose"
    → xml-compose-migration
 ```
 
-Açıkça çağırmak istersen: `/delivery-pipeline`, `/android-architect`, `/adr` …
+To call one directly: `/delivery-pipeline`, `/android-architect`, `/adr` …
 
-## Katkı / Genişletme
+## Contributing / extending
 
-Yeni bir skill eklerken:
+To add a new skill:
 
-1. `skills/<isim>/SKILL.md` oluştur — YAML frontmatter'da `name` ve `description` zorunlu
-2. `description` alanına **tetikleyici ifadeleri** (Türkçe + İngilizce) ve devretme sınırını yaz
-3. 500 satırı geçen içeriği `references/` altına böl, SKILL.md'den referans ver
-4. Sonuna bir **checklist** koy — üretilen kodun doğrulanabilir olması için
-5. Üç kataloğu güncelle: bu dosya, `skills/README.md`, `templates/CLAUDE.md`
-6. `./scripts/validate.sh` çalıştır (katalog senkronunu da kontrol eder)
+1. Create `skills/<name>/SKILL.md` — `name` and `description` are required in
+   the YAML frontmatter.
+2. Write **trigger phrases** (Turkish + English) and a hand-off boundary into
+   `description`.
+3. Split anything past 500 lines into `references/`, referenced from
+   `SKILL.md`.
+4. End with a **checklist** so the generated output stays verifiable.
+5. Update all three catalogs: this file, `skills/README.md`,
+   `templates/CLAUDE.md`.
+6. Run `./scripts/validate.sh` (also checks catalog sync).
 
-Detaylı yazım kuralları: [docs/AUTHORING.md](docs/AUTHORING.md)
+Full authoring rules: [docs/AUTHORING.md](docs/AUTHORING.md)
 
-## Bakım
+## Keeping it current
 
-Koleksiyon **haftalık bakım ajanı** ile diri tutulur: her pazartesi otomatik bir oturum
-Android/iOS/AI dünyasındaki son gelişmeleri tarar, etkilenen skill'leri
-[docs/MAINTENANCE.md](docs/MAINTENANCE.md) prosedürüne göre günceller ve değişiklikleri
-**PR olarak** açar — ana dala doğrudan yazmaz, son karar insandadır.
-Tur geçmişi: [docs/maintenance-log.md](docs/maintenance-log.md).
+The collection stays alive through a **weekly maintenance agent**: every
+Monday, an automated session scans recent Android/iOS/AI ecosystem changes,
+updates affected skills per [docs/MAINTENANCE.md](docs/MAINTENANCE.md), and
+opens the result **as a pull request** — it never writes to the default
+branch directly; a human makes the final call. Five layers keep the
+collection honest over time: structural CI, the weekly scan itself, a
+routing-accuracy eval every 4th run, a feedback loop via issue reports, and a
+deep cross-skill consistency audit every 12th run. Run history:
+[docs/maintenance-log.md](docs/maintenance-log.md).
 
-## Lisans
+## License
 
-MIT
+MIT — see [LICENSE](LICENSE).
