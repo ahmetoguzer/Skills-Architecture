@@ -5,6 +5,7 @@ Yeni satır her zaman **en üste** eklenir.
 
 | Tarih | Sonuç | PR |
 |---|---|---|
+| 2026-09-28 | Tur #10 — 1 yeni içerik (`on-device-ai`'ye ADK for Kotlin/agentic AI bölümü); `android/skills` hâlâ açık | [#7](https://github.com/ahmetoguzer/Skills-Architecture/pull/7) |
 | 2026-09-21 | Tur #9 — 1 güncelleme (Kotlin 2.4.20) + 1 kendi hata düzeltmesi (stale KSP-pairing notu); 3. parti bir yanlış iddia WebFetch ile doğrulanıp reddedildi; `android/skills` hâlâ açık | [#6](https://github.com/ahmetoguzer/Skills-Architecture/pull/6) |
 | 2026-09-14 | Tur #8 — 2 güncelleme (Kotlin 2.4.0 + KSP 2.3.12, google/ksp#2964 çözüldü — 4 tur süren erteleme bitti; Play Store geliştirici doğrulama izleme notu); routing eval 58/58; `android/skills` hâlâ açık | [#5](https://github.com/ahmetoguzer/Skills-Architecture/pull/5) |
 | 2026-09-07 | Tur #7 — 1 güncelleme (AGP 9.4.0 + dynamic feature flavor parity notu); Kotlin/KSP 4. kez ertelendi (google/ksp#2964 hâlâ açık); yeni gözlem: Swift SDK for Android (aksiyon değil); `android/skills` hâlâ açık | [#4](https://github.com/ahmetoguzer/Skills-Architecture/pull/4) |
