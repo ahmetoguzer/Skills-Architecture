@@ -98,22 +98,22 @@ loads correctly regardless of which language you write your request in.
 ### Personal use (active across all your projects)
 
 ```bash
-git clone https://github.com/ahmetoguzer/Skills-Architecture.git
-cd Skills-Architecture
+git clone https://github.com/ahmetoguzer/claude-code-mobile-skills.git
+cd claude-code-mobile-skills
 ./scripts/install.sh            # symlinks into ~/.claude/skills/
 ```
 
 ### Single project
 
 ```bash
-git clone https://github.com/ahmetoguzer/Skills-Architecture.git
+git clone https://github.com/ahmetoguzer/claude-code-mobile-skills.git
 ./scripts/install.sh --project /path/to/your/project    # <project>/.claude/skills/
 ```
 
 Or as a submodule:
 
 ```bash
-git submodule add https://github.com/ahmetoguzer/Skills-Architecture.git .claude/skills-architecture
+git submodule add https://github.com/ahmetoguzer/claude-code-mobile-skills.git .claude/skills-architecture
 ln -s ../skills-architecture/skills/android-architect .claude/skills/android-architect
 ```
 

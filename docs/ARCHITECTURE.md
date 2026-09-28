@@ -237,7 +237,7 @@ uyum sağlanınca **silinir** — kalıcı istisna istisna değildir.
 ## 6. Dosya Yapısı
 
 ```
-Skills-Architecture/
+claude-code-mobile-skills/
 ├── README.md                  ← katalog ve kurulum
 ├── docs/
 │   ├── ARCHITECTURE.md        ← bu dosya
